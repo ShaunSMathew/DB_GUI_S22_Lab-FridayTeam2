@@ -62,6 +62,7 @@ CREATE TABLE `test`.`order` (
     `farmer_id` INT NOT NULL,
     `rest_owner_id` INT NOT NULL,
     `tip` FLOAT,
+    `delivery_time` DATETIME,
     PRIMARY KEY (`id`), 
     UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
     INDEX (rest_owner_id),
