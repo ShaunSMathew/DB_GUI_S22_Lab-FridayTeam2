@@ -89,10 +89,14 @@ CREATE TABLE `test`.`review`(
     `rest_owner_id` INT NOT NULL,
     `review` FLOAT,
     `text` VARCHAR(270),
+    `order_id` INT NOT NULL,
+    `reply` VARCHAR(270),
     PRIMARY KEY (id),
     INDEX(farmer_id),
     INDEX(rest_owner_id),
+    INDEX(order_id),
     FOREIGN KEY (rest_owner_id) REFERENCES rest_owner(id),
-    FOREIGN KEY (farmer_id) REFERENCES farmer(id)
+    FOREIGN KEY (farmer_id) REFERENCES farmer(id),
+    FOREIGN KEY (order_id) REFERENCES order(id)
 );
 INSERT INTO `test`.`farmer` (`username`, `address`, `avg_rating`, `phone_num`, `profile_pic`) VALUES ('testUser',  '31240 Dyer Street Dallas TX 75275',5.0,'8178633074','https://i.pinimg.com/564x/67/33/63/67336393990790885d9c7c4de17b822b.jpg');
