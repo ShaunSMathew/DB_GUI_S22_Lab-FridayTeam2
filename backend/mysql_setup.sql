@@ -1,6 +1,13 @@
 -- create database db
 CREATE DATABASE test;
-
+SET FOREIGN_KEY_CHECKS = 0;
+drop table if exists test_table;
+drop table if exists farmer;
+drop table if exists product;
+drop table if exists rest_owner;
+drop table if exists `order`;
+drop table if exists review;
+SET FOREIGN_KEY_CHECKS = 1;
 -- use newly create database
 USE test;
 
@@ -40,8 +47,14 @@ CREATE TABLE `test`.`product` (
     `avg_rating` FLOAT,
     `likes` INT,
     `dislikes` INT,
+    `date_pub` DATETIME,
+    `picture` VARCHAR(500),
+    `description` VARCHAR(270),
+    `farmer_id` INT NOT NULL,
+    INDEX (farmer_id),
     PRIMARY KEY (`id`), 
-    UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE
+    UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
+    FOREIGN KEY (farmer_id) REFERENCES farmer(id)
 );
 -- create rest_owner (Restaurant Owner) table in test
 DROP Table `rest_owner`;
@@ -76,6 +89,7 @@ CREATE TABLE `test`.`review`(
     `rest_owner_id` INT NOT NULL,
     `review` FLOAT,
     `text` VARCHAR(270),
+    PRIMARY KEY (id),
     INDEX(farmer_id),
     INDEX(rest_owner_id),
     FOREIGN KEY (rest_owner_id) REFERENCES rest_owner(id),
