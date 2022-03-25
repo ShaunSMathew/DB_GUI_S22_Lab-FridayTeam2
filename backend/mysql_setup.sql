@@ -59,8 +59,8 @@ CREATE TABLE `test`.`rest_owner` (
 -- create order table in test
 CREATE TABLE `test`.`order` (
     `id` INT NOT NULL AUTO_INCREMENT, 
-    `farmer_id` INT NOT NULL AUTO_INCREMENT, 
-    `rest_owner_id` INT NOT NULL AUTO_INCREMENT, 
+    `farmer_id` INT NOT NULL,
+    `rest_owner_id` INT NOT NULL,
     `tip` FLOAT,
     PRIMARY KEY (`id`), 
     UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
