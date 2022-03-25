@@ -14,7 +14,7 @@ CREATE TABLE `test`.`test_table` (
 
 -- insert sample entry
 INSERT INTO `test`.`test_table` (`value`) VALUES ('Test Value');
-
+DROP Table `farmer`;
 
 -- create farmer table in test
 CREATE TABLE `test`.`farmer` (
@@ -44,6 +44,7 @@ CREATE TABLE `test`.`product` (
     UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE
 );
 -- create rest_owner (Restaurant Owner) table in test
+DROP Table `rest_owner`;
 CREATE TABLE `test`.`rest_owner` (
     `id` INT NOT NULL AUTO_INCREMENT, 
     `username` VARCHAR(70), 
@@ -68,3 +69,4 @@ CREATE TABLE `test`.`order` (
     FOREIGN KEY(rest_owner_id) REFERENCES rest_owner(id),
     FOREIGN KEY(farmer_id) REFERENCES farmer(id)
 );
+INSERT INTO `test`.`farmer` (`username`, `address`, `avg_rating`, `phone_num`, `profile_pic`) VALUES ('testUser',  '31240 Dyer Street Dallas TX 75275',5.0,'8178633074','https://i.pinimg.com/564x/67/33/63/67336393990790885d9c7c4de17b822b.jpg');
