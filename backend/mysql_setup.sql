@@ -69,4 +69,15 @@ CREATE TABLE `test`.`order` (
     FOREIGN KEY(rest_owner_id) REFERENCES rest_owner(id),
     FOREIGN KEY(farmer_id) REFERENCES farmer(id)
 );
+CREATE TABLE `test`.`review`(
+    `id` INT NOT NULL AUTO_INCREMENT,
+    `farmer_id` INT NOT NULL,
+    `rest_owner_id` INT NOT NULL,
+    `review` FLOAT,
+    `text` VARCHAR(270),
+    INDEX(farmer_id),
+    INDEX(rest_owner_id),
+    FOREIGN KEY (rest_owner_id) REFERENCES rest_owner(id),
+    FOREIGN KEY (farmer_id) REFERENCES farmer(id)
+);
 INSERT INTO `test`.`farmer` (`username`, `address`, `avg_rating`, `phone_num`, `profile_pic`) VALUES ('testUser',  '31240 Dyer Street Dallas TX 75275',5.0,'8178633074','https://i.pinimg.com/564x/67/33/63/67336393990790885d9c7c4de17b822b.jpg');
