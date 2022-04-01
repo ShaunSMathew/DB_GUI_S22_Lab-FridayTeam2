@@ -5,7 +5,11 @@ module.exports = function routes(app, logger) {
   app.get('/', (req, res) => {
     res.status(200).send('Go to 0.0.0.0:3000.');
   });
-
+//app.get
+    app.get('/health', (req, res)=> {
+    const responseBody = {status:'up'};
+    res.json(responseBody);
+    });
   // POST /reset
   app.post('/reset', (req, res) => {
     // obtain a connection from our pool of connections
