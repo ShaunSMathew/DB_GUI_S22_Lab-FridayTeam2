@@ -1,6 +1,11 @@
 const pool = require('./db')
 
 module.exports = function routes(app, logger) {
+  app.get('/health', (request, response) => {
+    const responseBody = { status: 'up'};
+    response.json(responseBody);
+  });
+
   // GET /
   app.get('/', (req, res) => {
     res.status(200).send('Go to 0.0.0.0:3000.');
