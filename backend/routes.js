@@ -1,4 +1,13 @@
 const pool = require('./db')
+const express = require('express');
+const bodyParser = require('body-parser');
+
+// Import any route handlers here.
+const restOwnerRoutes = require('./routes/rest_owner');
+// const sessionRoutes = require('./routes/session');
+
+app.use(createModelsMiddleware);
+app.use(bodyParser.json());
 
 module.exports = function routes(app, logger) {
   app.get('/health', (request, response) => {
@@ -10,6 +19,16 @@ module.exports = function routes(app, logger) {
   app.get('/', (req, res) => {
     res.status(200).send('Go to 0.0.0.0:3000.');
   });
+
+  app.use('/owners', restOwnerRoutes );
+
+
+
+
+
+
+
+
 
   // POST /reset
   app.post('/reset', (req, res) => {
