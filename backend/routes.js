@@ -23,13 +23,6 @@ module.exports = function routes(app, logger) {
   app.use('/owners', restOwnerRoutes );
 
 
-
-
-
-
-
-
-
   // POST /reset
   app.post('/reset', (req, res) => {
     // obtain a connection from our pool of connections
