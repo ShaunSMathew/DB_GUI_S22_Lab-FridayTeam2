@@ -1,9 +1,6 @@
 require('dotenv').config()
 const express = require('express');
 const bodyParser = require('body-parser');
-//const mysql = require('mysql');
-// const mysqlConnect = require('./db');
-//const routes = require('./routes');
 const farmerRoutes = require('./routes/farmer');
 const restOwnerRoutes = require('./routes/rest_owner');
 const healthRoute = require('./routes/health');

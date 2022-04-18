@@ -1,6 +1,9 @@
 const express = require('express');
 const User = require('../models/users');
+const farmer = require('../models/farmer');
+const rest_owner = require('../models/rest_owner');
 const {authenticateJWT} = require('../middleware/auth');
+const jwt = require("jsonwebtoken");
 
 const router = express.Router();
 
@@ -8,11 +11,17 @@ router.post('/', async (req, res, next) => {
     try {
         const body = req.body;
         const accessTokenSecret = 'mysupercoolsecret';
-        const result = await User.authenticateUser(body.username, body.password);
-        if (employee === null) {
-            return employee;
+        let accessToken;
+        const user = await User.authenticateUser(body.username, body.password);
+        if (user === null) {
+            return user;
         }
-        const accessToken = jwt.sign({ ...employee, claims: ['employee'] }, accessTokenSecret);
+        const farmers = await farmer.findUserByUsername(body.username);
+        const rest_owners = await rest_owner.findUserByUsername(body.username);
+        if (farmers.length == 0) {
+            accessToken = jwt.sign({ ...rest_owners[0], claims: ['owner'] }, accessTokenSecret);
+        } else
+            accessToken = jwt.sign({ ...farmers[0], claims: ['farmer'] }, accessTokenSecret);
         result = accessToken;
         res.status(201).json(result);
     } catch (err) {
