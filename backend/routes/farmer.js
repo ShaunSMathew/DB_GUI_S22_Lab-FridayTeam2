@@ -1,5 +1,5 @@
 const express = require('express');
-const rest_owner = require('../models/rest_owner');
+const farmer = require('../models/farmer');
 const router = express.Router();
 
 
