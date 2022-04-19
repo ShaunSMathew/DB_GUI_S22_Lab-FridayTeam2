@@ -36,7 +36,9 @@ CREATE TABLE `db`.`product` (
     `avg_rating` FLOAT,
     `likes` INT,
     `dislikes` INT,
+    `farmer_id` INT,
     PRIMARY KEY (`id`), 
+    FOREIGN KEY(farmer_id) REFERENCES farmer(id),
     UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE
 );
 
