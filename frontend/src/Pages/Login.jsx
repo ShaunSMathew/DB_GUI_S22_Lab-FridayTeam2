@@ -1,3 +1,24 @@
-export const Login=()=>{
-return <h1>Login</h1>
-}
+import { useState } from "react";
+import { TextField } from "../Common/TextField";
+export const Login = () => {
+  const [userName, setUserName] = useState("");
+  const [password, setPassword] = useState("");
+
+  return (
+    <div className="container">
+      <h1>Login</h1>
+      <TextField
+        label="Username"
+        value={userName}
+        setValue={setUserName}
+        type="text"
+      />
+      <TextField
+        label="Password"
+        value={password}
+        setValue={setPassword}
+        type="password"
+      />
+    </div>
+  );
+};
