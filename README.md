@@ -1,5 +1,4 @@
-# DB/GUI S22 Lab - Friday Team_2 - FarmersMarket
-### ShaunMathew
+# Sample docker-compose Project With MySQL DBaaS
 #### A sample project using docker-compose with Node and React.JS containers.
 #### Also uses a MySQL DBaaS like AWS RDS or GCloud CloudSQL.
 #### This project is meant to give you an understanding of how to formulate your docker development environment for developing web apps using React.JS, Node.JS, and a cloud SQL DBaaS like AWS RDS.
@@ -11,7 +10,7 @@
 # SETUP
 
 ## Initial setup
-First make sure to open a terminal window to `./backend` and `./frontend` and from there run `yarn` or `npm install` in both directories to install the necessary packages.
+First make sure to open a terminal window to `./backend` and `./frontend` and from there run `yarn` or `npm install` in both directories to install the necessary packages. 
 
 Create a file in the `./frontend` folder called `.env` and add the the following to it (if it is not already there):
 ```
@@ -37,7 +36,7 @@ MYSQL_CLOUD_HOST=
 ```
 
 ## MySQL setup
-Once you have set up you mysql database on a DBaaS provider like AWS RDS or GCloud CloudSQL, ensure that the database is publicly accessible on the port you used in setup (usually 3306). Then access the database and run the commands provided in `./backend/mysql_setup.sql`.
+Once you have set up you mysql database on a DBaaS provider like AWS RDS or GCloud CloudSQL, ensure that the database is publicly accessible on the port you used in setup (usually 3306). Then access the database and run the commands provided in `./backend/mysql_setup.sql`. 
 
 Once you have run those commands, in `./backend/.env` add all the values that you were provided. Specifically the host, user, pass, and port of the database.
 

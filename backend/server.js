@@ -1,12 +1,11 @@
 require('dotenv').config()
 const express = require('express');
 const bodyParser = require('body-parser');
-const farmerRoutes = require('./routes/farmer');
-const restOwnerRoutes = require('./routes/rest_owner');
-const healthRoute = require('./routes/health');
-const userRoutes = require('./routes/users');
-const sessionRoutes = require('./routes/session');
-const sessionAuthRoutes = require('./routes/sessionAuth');
+const mysql = require('mysql');
+const cors = require('cors');
+const { log, ExpressAPILogMiddleware } = require('@rama41222/node-logger');
+// const mysqlConnect = require('./db');
+const routes = require('./routes');
 
 // set up some configs for express.
 const config = {
@@ -18,21 +17,23 @@ const config = {
 // create the express.js object
 const app = express();
 
-// use body parser
-app.use(bodyParser.json());
+// create a logger object.  Using logger is preferable to simply writing to the console.
+const logger = log({ console: true, file: false, label: config.name });
 
-// include authentification middleware
-const { authenticateJWT, authenticateWithClaims } = require('./middleware/auth');
+// specify middleware to use
+app.use(bodyParser.json());
+app.use(cors({
+  origin: '*'
+}));
+app.use(ExpressAPILogMiddleware(logger, { request: true }));
 
 //include routes
-app.use('/health', healthRoute);
-app.use('/session', sessionRoutes);
-app.use('/session', authenticateJWT, sessionAuthRoutes);
-app.use('/owners', authenticateWithClaims(['owner']), restOwnerRoutes);
-app.use('/farmers', authenticateWithClaims(['farmer']), farmerRoutes);
-app.use('/users', userRoutes);
+routes(app, logger);
 
 // connecting the express object to listen on a particular port as defined in the config object.
-app.listen(config.port, () => {
-  console.log(`This app is listening on port ${config.port}`);
+app.listen(config.port, config.host, (e) => {
+  if (e) {
+    throw new Error('Internal Server Error');
+  }
+  logger.info(`${config.name} running on ${config.host}:${config.port}`);
 });
