@@ -4,7 +4,6 @@ const farmer = require('../models/farmer');
 const rest_owner = require('../models/rest_owner');
 const {authenticateJWT} = require('../middleware/auth');
 const jwt = require("jsonwebtoken");
-
 const router = express.Router();
 
 router.post('/', async (req, res, next) => {
