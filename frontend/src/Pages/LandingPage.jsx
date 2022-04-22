@@ -14,11 +14,6 @@ export const LandingPage = () => {
         To access the site, please create a new account or sign in to an
         existing account.
       </p>
-
-      <div className="d-flex">
-        <Signup />
-        <Login />
-      </div>
     </div>
   );
 };
