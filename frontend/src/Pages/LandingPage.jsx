@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Login } from "./Login";
-import { Signup } from "./Signup";
+
 export const LandingPage = () => {
   const [loggedIn, setLoggedIn] = useState(false);
   return (
