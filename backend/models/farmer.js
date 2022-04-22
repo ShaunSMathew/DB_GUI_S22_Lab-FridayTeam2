@@ -2,9 +2,9 @@ const knex = require('../knex.js');
 
 const FARMER_TABLE = 'farmer';
 
-const createNewFarmer = async (username, address, phone_num, profile_pic) => {
+const createNewFarmer = async (username) => {
 
-    const query = knex(FARMER_TABLE).insert({ username, address, phone_num, profile_pic });
+    const query = knex(FARMER_TABLE).insert({ username });
     console.log('Raw query for createNewUser:', query.toString());
     const result = await query;
 
@@ -17,7 +17,16 @@ const findUserByUsername = async (username) => {
     return result;
 };
 
+const updateProfile = async (username, street_address, city, state, zip, phone_num) => {
+    const query = await knex(FARMER_TABLE).where({ username }).update({
+        street_address, city, state, zip, phone_num
+    });
+    const result = await knex(FARMER_TABLE).where({ username });
+    return result;
+}
+
 module.exports = {
     createNewFarmer,
-    findUserByUsername
+    findUserByUsername,
+    updateProfile
 };
