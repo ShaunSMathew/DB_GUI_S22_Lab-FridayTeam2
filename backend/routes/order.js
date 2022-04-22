@@ -14,8 +14,8 @@ router.post('/', async (req, res, next) => {
             const err = { message: "amount not enough" };
             throw err;
         }
-        const result = await order.createNewOrder(body.farmer_username, rest_owner.username, body.product_id, body.amount, body.tip);
         const update = await product.updateAmount(body.amount);
+        const result = await order.createNewOrder(body.farmer_username, rest_owner.username, body.product_id, body.amount, body.tip);
         res.status(201).json(result);
     } catch (err) {
         console.error('Failed to create new order:', err);
