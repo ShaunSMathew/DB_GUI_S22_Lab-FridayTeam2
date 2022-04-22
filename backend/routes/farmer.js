@@ -33,9 +33,10 @@ router.post('/product', async (req, res, next) => {
 router.put('/address', async(req, res, next)=>{ //Change a farmer's address
     try{
         const info = req.body;
-        const id = req.user.id;
-        console.log("Making changes to address of farmer  with id: ", id.toString());
-        const result = await farmer.changeAddress(info, id);
+        const user = req.body.user;
+       // const id = req.user.id;
+        console.log("Making changes to address of farmer  with id: ", user.toString());
+        const result = await farmer.changeAddress(info, user);
         res.status(200).json(result);
     }
     catch(err){
@@ -48,14 +49,15 @@ router.put('/address', async(req, res, next)=>{ //Change a farmer's address
 });
 router.delete('/address', async(req, res, next)=>{ //delete a farmer's address
     try{
+        const user = req.body.user;
         // const info = req.body;
         const id = req.user.id;
-        console.log("Deleting address of farmer with id: ". id.toString());
-        const result = await farmer.deleteAddress( id);
+        console.log("Deleting address of farmer with id: ". user.toString());
+        const result = await farmer.deleteAddress( user);
         res.status(200).json(result);
     }
     catch(err){
-        console.error('Failed to delete address for farmer with id: ', id.toString());
+        console.error('Failed to delete address for farmer with id: ', user.toString());
         res.status(400).json({message:err.toString()});
     }
     next();
