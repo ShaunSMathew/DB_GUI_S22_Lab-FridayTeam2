@@ -13,57 +13,75 @@ INSERT INTO `db`.`user` (`username`, `password`) VALUES ('testUser2',  'password
 
 -- create farmer table in db
 CREATE TABLE `db`.`farmer` (
-    `id` INT NOT NULL AUTO_INCREMENT, 
-    `username` VARCHAR(45),
-    `address` VARCHAR(100),
-    `avg_rating` FLOAT,
-    `phone_num` VARCHAR(11), 
+    `username` VARCHAR(45) NOT NULL,
+    `street_address` VARCHAR(100),
+    `city` VARCHAR(50),
+    `state` VARCHAR(50),
+    `zip` INTEGER,
+    `ratings_sum` FLOAT,
+    `num_of_ratings` INTEGER,
+    `phone_num` VARCHAR(15),
     `profile_pic` VARCHAR(500),
-    PRIMARY KEY (`id`),
+    PRIMARY KEY (`username`),
     FOREIGN KEY (username) REFERENCES `db`.`user`(username),
-    UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE
+    UNIQUE INDEX `id_UNIQUE` (`username` ASC) VISIBLE
 );
 
 -- insert sample entry
-INSERT INTO `db`.`farmer` (`username`, `address`, `avg_rating`, `phone_num`, `profile_pic`) VALUES ('testUser1',  '31240 Dyer Street Dallas TX 75275',5.0,'8178633074','https://i.pinimg.com/564x/67/33/63/67336393990790885d9c7c4de17b822b.jpg');
+INSERT INTO `db`.`farmer` (`username`, `street_address`, `phone_num`, `profile_pic`) VALUES ('testUser1',  '31240 Dyer Street Dallas TX 75275', '8178633074','https://i.pinimg.com/564x/67/33/63/67336393990790885d9c7c4de17b822b.jpg');
 
 -- create product table in db
 CREATE TABLE `db`.`product` (
-    `id` INT NOT NULL AUTO_INCREMENT, 
-    `name` VARCHAR(200), 
+    `id` INT NOT NULL AUTO_INCREMENT,
+    `name` VARCHAR(200),
     `price` FLOAT,
     `amount` INT,
-    `avg_rating` FLOAT,
+    `ratings_sum` FLOAT,
+    `num_of_ratings` INTEGER,
     `likes` INT,
     `dislikes` INT,
-    PRIMARY KEY (`id`), 
+    `farmer_username` VARCHAR(45),
+    PRIMARY KEY (`id`),
+    FOREIGN KEY (farmer_username) REFERENCES farmer(username),
     UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE
 );
 
+INSERT INTO `db`.`product` (`name`, `price`, `amount`, `farmer_username`) VALUES ('corn', '12.00', '3', 'testUser1');
+
 -- create rest_owner (Restaurant Owner) table in test
 CREATE TABLE `db`.`rest_owner` (
-    `id` INT NOT NULL AUTO_INCREMENT, 
-    `username` VARCHAR(70), 
+    `username` VARCHAR(45) NOT NULL,
     `address` VARCHAR(100),
-    `avg_rating` FLOAT,
-    `phone_num` VARCHAR(10),
+    `ratings_sum` FLOAT,
+    `num_of_ratings` INTEGER,
+    `phone_num` VARCHAR(15),
     `profile_pic` VARCHAR(500),
-    PRIMARY KEY (`id`),
+    PRIMARY KEY (`username`),
     FOREIGN KEY (username) REFERENCES `db`.`user`(username),
-    UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE
+    UNIQUE INDEX `id_UNIQUE` (`username` ASC) VISIBLE
 );
 
 -- create order table in test
 CREATE TABLE `db`.`order` (
-    `id` INT NOT NULL AUTO_INCREMENT, 
-    `farmer_id` INT NOT NULL,
-    `rest_owner_id` INT NOT NULL,
+    `id` INT NOT NULL AUTO_INCREMENT,
+    `farmer_username` VARCHAR(45) NOT NULL,
+    `rest_owner_username` VARCHAR(45) NOT NULL,
+    `product_id` INTEGER,
     `tip` FLOAT,
-    PRIMARY KEY (`id`), 
+    PRIMARY KEY (`id`),
     UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
-    INDEX (rest_owner_id),
-    INDEX (`farmer_id`),
-    FOREIGN KEY(rest_owner_id) REFERENCES rest_owner(id),
-    FOREIGN KEY(farmer_id) REFERENCES farmer(id)
+    INDEX (rest_owner_username),
+    INDEX (`farmer_username`),
+    FOREIGN KEY(rest_owner_username) REFERENCES rest_owner(username),
+    FOREIGN KEY(farmer_username) REFERENCES farmer(username),
+    FOREIGN KEY(product_id) REFERENCES product(id)
 );
-INSERT INTO `db`.`farmer` (`username`, `address`, `avg_rating`, `phone_num`, `profile_pic`) VALUES ('testUser2',  '31240 Dyer Street Dallas TX 75275',5.0,'8178633074','https://i.pinimg.com/564x/67/33/63/67336393990790885d9c7c4de17b822b.jpg');
+
+CREATE TABLE `db`.`review` (
+    `id` INT NOT NULL AUTO_INCREMENT,
+    `text` VARCHAR(500),
+    `farmer_username` VARCHAR(45),
+    FOREIGN KEY (farmer_username) REFERENCES farmer(username),
+    PRIMARY KEY (`id`)
+);
+
