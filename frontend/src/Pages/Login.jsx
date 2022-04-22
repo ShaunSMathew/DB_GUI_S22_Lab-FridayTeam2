@@ -1,16 +1,23 @@
 import React, { useState } from "react";
-import { TextField } from "../Common/TextField";
+import { TextField, SelectUserType } from "../Common";
+import { ApiMain } from "../Common";
+import { Link, useNavigate } from "react-router-dom";
+import { Form } from "react-bootstrap";
+
+
 export const Login = () => {
-  const [userName, setUserName] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [userType, setUserType] = useState("");
+  const [validated, setValidated] = useState(false);
 
   return (
-    <div className="container">
-      <h1>Login</h1>
+    <div className="container form-group">
+      <h1 class="text-white bg-primary">Login</h1>
       <TextField
         label="Username"
-        value={userName}
-        setValue={setUserName}
+        value={username}
+        setValue={setUsername}
         type="text"
       />
       <TextField
@@ -19,7 +26,22 @@ export const Login = () => {
         setValue={setPassword}
         type="password"
       />
-      
+      <SelectUserType
+        label="Select User Type"
+        value={userType}
+        setValue={setUserType}
+      />
+      <Link to="/" class="btn btn-danger me-3">
+        Cancel
+      </Link>
+      <button
+        class="btn btn-success"
+        id="signupButton"
+        type="submit"
+        form="signup-form"
+      >
+        Submit
+      </button>
     </div>
   );
 };
