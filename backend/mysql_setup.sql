@@ -1,5 +1,6 @@
 USE db;
 
+create database db;
 -- create user table in db
 CREATE TABLE `db`.`user` (
     `username` VARCHAR(45) NOT NULL,
@@ -67,6 +68,7 @@ CREATE TABLE `db`.`order` (
     `farmer_username` VARCHAR(45) NOT NULL,
     `rest_owner_username` VARCHAR(45) NOT NULL,
     `product_id` INTEGER,
+    `amount` INTEGER,
     `tip` FLOAT,
     PRIMARY KEY (`id`),
     UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
@@ -84,4 +86,3 @@ CREATE TABLE `db`.`review` (
     FOREIGN KEY (farmer_username) REFERENCES farmer(username),
     PRIMARY KEY (`id`)
 );
-
