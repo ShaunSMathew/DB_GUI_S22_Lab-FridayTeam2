@@ -22,7 +22,8 @@ const app = express();
 app.use(bodyParser.json());
 
 // include authentification middleware
-const { authenticateJWT, authenticateWithClaims } = require('./middleware/auth');
+//const { authenticateJWT, authenticateWithClaims } = require('./middleware/auth');
+const {authenticateWithClaims} = require('./middleware/auth');
 
 //include routes
 app.use('/health', healthRoute);
