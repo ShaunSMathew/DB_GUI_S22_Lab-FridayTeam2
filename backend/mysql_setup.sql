@@ -46,6 +46,8 @@ CREATE TABLE `db`.`product` (
     UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE
 );
 
+INSERT INTO `db`.`product` (`name`, `price`, `amount`, `farmer_username`) VALUES ('corn', '12.00', '3', 'testUser1');
+
 -- create rest_owner (Restaurant Owner) table in test
 CREATE TABLE `db`.`rest_owner` (
     `username` VARCHAR(45) NOT NULL,
