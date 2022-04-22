@@ -23,21 +23,21 @@ const updateProfile = async (username, street_address, city, state, zip, phone_n
     });
     const result = await knex(REST_OWNER_TABLE).where({ username });
 };
-const changeAddress = async (body, restId) => {
+const changeAddress = async (body, restUser) => {
     const newAddress = body.address;
-
-    const changeAddy = knex(REST_OWNER_TABLE).where({id : restId}).update({address:newAddress});
+    const changeAddy = knex(REST_OWNER_TABLE).where({username : restUser}).update({address:newAddress});
     console.log(`Raw query for changeAddress: `, changeAddy.toString());
     const result = await changeAddy;
     return result;
 };
 
-const deleteAddress = async(body, restId) =>{
-    const address = knex(REST_OWNER_TABLE).where({id : restId}).update({address: " "}); 
+const deleteAddress = async(restUser) =>{
+    const address = knex(REST_OWNER_TABLE).where({username : restUser}).update({address: " "}); 
     //Not sure if this is how to do this-- don't actually want to delete anything from database
     const result = await address;
     return result;
 };
+
 
 module.exports = {
     createNewOwner,

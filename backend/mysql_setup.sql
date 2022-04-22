@@ -21,14 +21,14 @@ CREATE TABLE `db`.`farmer` (
     `ratings_sum` FLOAT,
     `num_of_ratings` INTEGER,
     `phone_num` VARCHAR(15),
-    `profile_pic` VARCHAR(500),
+    -- `profile_pic` VARCHAR(500),
     PRIMARY KEY (`username`),
     FOREIGN KEY (username) REFERENCES `db`.`user`(username),
     UNIQUE INDEX `id_UNIQUE` (`username` ASC) VISIBLE
 );
 
 -- insert sample entry
-INSERT INTO `db`.`farmer` (`username`, `street_address`, `phone_num`, `profile_pic`) VALUES ('testUser1',  '31240 Dyer Street Dallas TX 75275', '8178633074','https://i.pinimg.com/564x/67/33/63/67336393990790885d9c7c4de17b822b.jpg');
+INSERT INTO `db`.`farmer` (`username`, `street_address`, `phone_num`) VALUES ('testUser1',  '31240 Dyer Street Dallas TX 75275', '8178633074');
 
 -- create product table in db
 CREATE TABLE `db`.`product` (
@@ -55,7 +55,7 @@ CREATE TABLE `db`.`rest_owner` (
     `ratings_sum` FLOAT,
     `num_of_ratings` INTEGER,
     `phone_num` VARCHAR(15),
-    `profile_pic` VARCHAR(500),
+    -- `profile_pic` VARCHAR(500),
     PRIMARY KEY (`username`),
     FOREIGN KEY (username) REFERENCES `db`.`user`(username),
     UNIQUE INDEX `id_UNIQUE` (`username` ASC) VISIBLE
