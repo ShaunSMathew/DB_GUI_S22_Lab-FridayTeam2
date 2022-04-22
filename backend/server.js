@@ -1,11 +1,12 @@
 require('dotenv').config()
 const express = require('express');
 const bodyParser = require('body-parser');
-const mysql = require('mysql');
-const cors = require('cors');
-const { log, ExpressAPILogMiddleware } = require('@rama41222/node-logger');
-// const mysqlConnect = require('./db');
-const routes = require('./routes');
+const farmerRoutes = require('./routes/farmer');
+const restOwnerRoutes = require('./routes/rest_owner');
+const healthRoute = require('./routes/health');
+const accountRoutes = require('./routes/account');
+const sessionRoutes = require('./routes/session');
+const profileRoutes = require('./routes/profile');
 
 // set up some configs for express.
 const config = {
@@ -17,23 +18,22 @@ const config = {
 // create the express.js object
 const app = express();
 
-// create a logger object.  Using logger is preferable to simply writing to the console.
-const logger = log({ console: true, file: false, label: config.name });
-
-// specify middleware to use
+// use body parser
 app.use(bodyParser.json());
-app.use(cors({
-  origin: '*'
-}));
-app.use(ExpressAPILogMiddleware(logger, { request: true }));
+
+// include authentification middleware
+//const { authenticateJWT, authenticateWithClaims } = require('./middleware/auth');
+const {authenticateWithClaims} = require('./middleware/auth');
 
 //include routes
-routes(app, logger);
+app.use('/health', healthRoute);
+app.use('/newaccount', accountRoutes);
+app.use('/login', sessionRoutes);
+app.use('/profile', authenticateJWT, profileRoutes);
+app.use('/owners', authenticateWithClaims(['owner']), restOwnerRoutes);
+app.use('/farmers', authenticateWithClaims(['farmer']), farmerRoutes);
 
 // connecting the express object to listen on a particular port as defined in the config object.
-app.listen(config.port, config.host, (e) => {
-  if (e) {
-    throw new Error('Internal Server Error');
-  }
-  logger.info(`${config.name} running on ${config.host}:${config.port}`);
+app.listen(config.port, () => {
+  console.log(`This app is listening on port ${config.port}`);
 });
