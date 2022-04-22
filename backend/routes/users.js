@@ -9,14 +9,13 @@ router.post('/farmer', async (req, res, next) => {
     try {
         const body = req.body;
         console.log(body);
-        await user.createNewUser(body.username, body.password);
-        const result = farmer.createNewFarmer(body.username, body.address, body.phone_num, body.profile_pic);
+        await user.createNewUser(body.username, body.password); // FIX ME is this how that works? 
+        const result = farmer.createNewFarmer(body.username, body.address, body.phone_num);
         res.status(201).json(result);
     } catch (err) {
         console.error('Failed to create new user:', err);
         res.status(500).json({ message: err.toString() });
     }
-
     next();
 });
 
@@ -26,7 +25,7 @@ router.post('/owner', async (req, res, next) => {
         const body = req.body;
         console.log(body);
         await user.createNewUser(body.username, body.password);
-        const result = rest_owner.createNewOwner(body.username, body.address, body.phone_num, body.profile_pic);
+        const result = rest_owner.createNewOwner(body.username, body.address, body.phone_num);
         res.status(201).json(result);
     } catch (err) {
         console.error('Failed to create new user:', err);
