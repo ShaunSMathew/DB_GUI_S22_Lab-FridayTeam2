@@ -20,7 +20,7 @@ router.post('/product', async (req, res, next) => {
         const body = req.body;
         console.log(body);
         const farmer = await farmer.findUserByUsername(user.username);
-        result = await order.createNewOrder(body.name, body.price, body.amount, farmer.id);
+        result = await order.createNewOrder(body.name, body.price, body.amount, farmer.username);
         res.status(201).json(result);
     } catch (err) {
         console.error('Failed to create new product:', err);
