@@ -4,6 +4,7 @@ const farmer = require('../models/farmer');
 const product = require('../models/product');
 const review = require('../models/review');
 const order = require('../models/order');
+const schedule = require('../models/schedule');
 const router = express.Router();
 
 router.get('/:username', async (req, res, next) => {
@@ -15,6 +16,7 @@ router.get('/:username', async (req, res, next) => {
             result = farmers[0];
             result.products = await product.getProductByFarmer(req.params.username);
             result.reviews = await review.getReviewByFarmer(req.params.username);
+            result.schedule = await schedule.getScheduleByFarmer(req.params.username);
         }
         if (rest_owners.length > 0) 
             result = rest_owners[0];
@@ -33,7 +35,7 @@ router.get('/:username/orders', async (req, res, next) => {
         const result = await query;
         res.status(201).json(result);
     } catch (err) {
-        console.error('Failed to get profile information:', err);
+        console.error('Failed to get order history:', err);
         res.status(500).json({ message: err.toString() });
     }
 
@@ -58,6 +60,45 @@ router.put('/:username', async (req, res, next) => {
     }
 
     next();
+});
+
+router.post('/:username/product', async (req, res, next) => {
+    try {
+        const body = req.body;
+        const result = await product.postProduct(body.name, body.price, body.amount);
+        res.status(201).json(result);
+    } catch (err) {
+        console.error('Failed to post product:', err);
+        res.status(500).json({ message: err.toString() });
+    }
+
+    next();  
+});
+
+router.put('/:username/product', async (req, res, next) => {
+    try {
+        const body = req.body;
+        const result = await product.putProduct(body.id, body.name, body.price, body.amount);
+        res.status(201).json(result);
+    } catch (err) {
+        console.error('Failed to edit product:', err);
+        res.status(500).json({ message: err.toString() });
+    }
+
+    next();  
+});
+
+router.delete('/:username/product', async (req, res, next) => {
+    try {
+        const body = req.body;
+        const result = await product.deleteProduct(body.id);
+        res.status(201).json(result);
+    } catch (err) {
+        console.error('Failed to delete product:', err);
+        res.status(500).json({ message: err.toString() });
+    }
+
+    next();  
 });
 
 module.exports = router;
