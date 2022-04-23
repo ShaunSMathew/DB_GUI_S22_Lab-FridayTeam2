@@ -84,4 +84,18 @@ CREATE TABLE `db`.`review` (
     FOREIGN KEY (farmer_username) REFERENCES farmer(username),
     PRIMARY KEY (`id`)
 );
+INSERT INTO `db`.`review` (`text`, `farmer_username`) VALUES ('Great!', 'testUser1');
+
+CREATE TABLE `db`.`schedule` (
+    `id` INT NOT NULL AUTO_INCREMENT,
+    `date` DATE,
+    `time` TIME,
+    `entry` VARCHAR(50),
+    `farmer_username` VARCHAR(45),
+    PRIMARY KEY(`id`),
+    FOREIGN KEY (farmer_username) REFERENCES farmer(username)
+);
+
+INSERT INTO `db`.`schedule` (`date`, `time`, `entry`, `farmer_username`)
+VALUES ('2022-02-01', '12:00', 'Potato delivery', 'testUser1');
 
