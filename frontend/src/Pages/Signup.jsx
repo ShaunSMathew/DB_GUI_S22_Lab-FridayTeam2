@@ -7,7 +7,7 @@ import { Form, Button } from "react-bootstrap";
 export const Signup = (props) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [userType, setUserType] = useState("");
+  const [user_type, setUserType] = useState("");
   const [validated, setValidated] = useState(false);
 
   const navigate = useNavigate();
@@ -21,7 +21,7 @@ export const Signup = (props) => {
       setValidated(true);
     } else {
       let newUser = new User(username, password);
-      newUser["userType"] = userType;
+      newUser["user_type"] = user_type;
       api
         .signup(newUser)
         .then((res) => {
@@ -55,7 +55,7 @@ export const Signup = (props) => {
         <Form.Group>
           <TextField label="Username" value={username} setValue={setUsername} type="text" />
           <TextField label="Password" value={password} setValue={setPassword} type="password" />
-          <SelectUserType label="Select User Type" value={userType} setValue={setUserType} />
+          <SelectUserType label="Select User Type" value={user_type} setValue={setUserType} />
         </Form.Group>
         <div className="container p-3">
           <Link to="/" class="btn btn-danger me-3">
