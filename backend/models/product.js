@@ -9,6 +9,26 @@ const getProductByFarmer = async (username) => { //Returns a list of all product
     return result;
 };
 
+const postProduct = async (name, price, amount) => {
+    const query = knex(PRODUCT_TABLE).insert({name, price, amount});
+    const result = await query;
+    const product = knex(PRODUCT_TABLE).where('id', result);
+    return product;
+};
+
+const putProduct = async (id, name, price, amount) => {
+    const query = knex(PRODUCT_TABLE).where('id', id).update({name, price, amount});
+    const result = await query;
+    const product = knex(PRODUCT_TABLE).where('id', result);
+    return product;
+};
+
+const deleteProduct = async (id) => {
+    const query = knex(PRODUCT_TABLE).where('id', id).del();
+    const result = await query;
+    return result;
+};
+
 const getProductById = async(id) => { //Unnecessary function as the getProducts function can accept an id by itself and have the same result
     const query = knex(PRODUCT_TABLE).where('id', id);
     const result = await query;
@@ -43,9 +63,11 @@ const getProducts = async(id, name, amount, price) =>{ //This returns products b
 };
 
 
-
 module.exports = {
     getProductByFarmer,
+    postProduct,
+    putProduct,
+    deleteProduct,
     getProducts,
     getProductById
 }

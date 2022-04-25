@@ -26,7 +26,6 @@ const {
   authenticateJWT,
   authenticateWithClaims,
 } = require("./middleware/auth");
-// const {authenticateWithClaims} = require('./middleware/auth');
 
 //include routes
 app.use("/health", healthRoute);
