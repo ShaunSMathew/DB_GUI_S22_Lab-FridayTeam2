@@ -14,17 +14,12 @@ export const SelectUserType = ({ label, value, setValue }) => {
   ];
   return (
     <div>
-      <label for="value">{label}</label>
-      <select
-        name="value"
-        id="value"
-        value={value}
-        onChange={(event) => setValue(event.target.value)}
-      >
+      <Form.Label for="value">{label}</Form.Label>
+      <Form.Select name="value" id="value" value={value} onChange={(event) => setValue(event.target.value)} required>
         {options.map((option) => (
           <option value={option.value}>{option.label}</option>
         ))}
-      </select>
+      </Form.Select>
     </div>
   );
 };

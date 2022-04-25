@@ -4,8 +4,8 @@ import { Form } from "react-bootstrap";
 export const TextField = ({ label, value, setValue, type }) => {
   return (
     <div>
-      <Form.Control htmlFor="value">{label}</Form.Control>
-      <input
+      <Form.Label for="value">{label}</Form.Label>
+      <Form.Control
         type={type}
         id="value"
         name="value"
