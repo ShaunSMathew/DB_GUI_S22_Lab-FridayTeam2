@@ -11,5 +11,6 @@ const createNewReview = async (text, farmer_username) => {
     return result;
 };
 
-
-createNewReview
+module.exports = {
+    createNewReview
+}
