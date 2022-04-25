@@ -1,9 +1,16 @@
 const knex = require('../knex.js');
 
 const PRODUCT_TABLE = 'product';
+const FARMER_TABLE = 'farmer';
 
-const getProductByFarmer = async (username) => {
+const getProductByFarmer = async (username) => { //Returns a list of all products listed with that farmer's username
     const query = knex(PRODUCT_TABLE).where('farmer_username', username);
+    const result = await query;
+    return result;
+};
+
+const getProductById = async(id) => { //Unnecessary function as the getProducts function can accept an id by itself and have the same result
+    const query = knex(PRODUCT_TABLE).where('id', id);
     const result = await query;
     return result;
 };
@@ -35,7 +42,10 @@ const getProducts = async(id, name, amount, price) =>{ //This returns products b
         return result;
 };
 
+
+
 module.exports = {
     getProductByFarmer,
-    getProducts
+    getProducts,
+    getProductById
 }

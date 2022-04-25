@@ -16,7 +16,7 @@ const express = require('express');
 //     next();
 // });
 
-router.get('/products', async (req, res, next)=>{ //Allows users to search products by id, name, amount and price 
+router.get('/products', async (req, res, next)=>{ //Allows users to search products by product id, name, amount and price 
     try{
         const id = req.query.id;
         const name = req.query.name;
@@ -36,5 +36,43 @@ router.get('/products', async (req, res, next)=>{ //Allows users to search produ
     next();
 
 });
+
+router.get('/productByFarmer', async(req, res, next)=>{ //Accepts a farmer's username to return all products posted by that farmer
+    try{
+        const farmerName = req.query.username;
+        const results = await products.getProductByFarmer(farmerName);
+        res.status(200).json({
+            message: 'Products retrieved',
+            results: results
+        });
+    }
+    catch(error){
+        res.status(500).json({
+            message:'Something went wrong. Please make sure that the farmer username is correct.'
+        });
+    }
+    next();
+});
+
+router.get('/searchFarmersByLocation', async(req, res, next)=>{
+    try{
+        const street = req.query.street_address;
+        const city = req.query.city;
+        const state = req.query.state;
+        const zip = req.query.zip;
+        const results = await farmer.searchFarmerByLocation(street, city, state, zip);
+
+        res.status(200).json({
+            message: 'Products retrieved by location search: ',
+            results: results
+        });
+    }
+    catch(error){
+        res.status(500).json({
+            message:'Something went wrong. Please make sure that the location parameters are correct.'
+        });
+    }
+    next();
+})
 
 module.exports = router;
