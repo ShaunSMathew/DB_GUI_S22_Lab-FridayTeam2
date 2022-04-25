@@ -1,29 +1,69 @@
 import React, { useState } from "react";
-import { TextField, SelectUserType } from "../Common";
+import { TextField, SelectUserType, User } from "../Common";
 import { ApiMain } from "../Common";
 import { Link, useNavigate } from "react-router-dom";
-import { Form } from "react-bootstrap";
+import { Form, Button } from "react-bootstrap";
 
-export const Login = () => {
+export const Login = (props) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [userType, setUserType] = useState("");
+  const [user_type, setUserType] = useState("");
   const [validated, setValidated] = useState(false);
 
-  return (
-    <div className="container form-group">
-      <h1 class="text-white bg-primary">Log In</h1>
+  const navigate = useNavigate();
+  const api = new ApiMain();
 
-      <Form noValidate validated={validated}>
-        <TextField label="Username" value={username} setValue={setUsername} type="text" />
-        <TextField label="Password" value={password} setValue={setPassword} type="password" />
-        <SelectUserType label="Select User Type" value={userType} setValue={setUserType} />
-        <Link to="/" class="btn btn-danger me-3">
-          Cancel
-        </Link>
-        <button class="btn btn-success" id="signupButton" type="submit" form="signup-form">
-          Log Back In
-        </button>
+  const handleSubmit = (event) => {
+    const form = event.currentTarget;
+    if (form.checkValidity() === false) {
+      event.preventDefault();
+      event.stopPropagation();
+      setValidated(true);
+    } else {
+      let newUser = new User(username, password);
+      newUser["user_type"] = user_type;
+      api
+        .signup(newUser)
+        .then((res) => {
+          props.setToken(res.data.data.jwt);
+          localStorage.setItem("token", res.data.data.jwt);
+          navigate("/");
+          console.log(res.data.data.jwt);
+        })
+        .catch((err) => {
+          console.log(err.data.data);
+          alert(err.data.data);
+        });
+    }
+  };
+  if (props.token) {
+    return (
+      <div class="w-75 mx-auto">
+        <div class="border mb-2 mt-5">
+          <h1 class="text-white bg-primary p-3 mb-0">You are already logged in</h1>
+          {navigate("/")}
+        </div>
+      </div>
+    );
+  }
+  return (
+    <div className="container">
+      <h1 class="">Log In</h1>
+
+      <Form onSubmit={handleSubmit} noValidate validated={validated}>
+        <Form.Group>
+          <TextField label="Username" value={username} setValue={setUsername} type="text" />
+          <TextField label="Password" value={password} setValue={setPassword} type="password" />
+          <SelectUserType label="Select User Type" value={user_type} setValue={setUserType} />
+        </Form.Group>
+        <div className="container p-3">
+          <Link to="/" class="btn btn-outline-danger me-3">
+            Cancel
+          </Link>
+          <Button variant="success" id="signupButton" type="submit">
+            Log Back In
+          </Button>
+        </div>
       </Form>
     </div>
   );

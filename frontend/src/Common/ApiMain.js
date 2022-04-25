@@ -12,7 +12,7 @@ export class ApiMain {
   }
 
   checkUser(token) {
-    return axios.get(`${this.url}/users/check`, {
+    return axios.get(`${this.url}/login`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

@@ -58,10 +58,10 @@ export const Signup = (props) => {
           <SelectUserType label="Select User Type" value={user_type} setValue={setUserType} />
         </Form.Group>
         <div className="container p-3">
-          <Link to="/" class="btn btn-danger me-3">
+          <Link to="/" class="btn btn-outline-danger me-3">
             Cancel
           </Link>
-          <Button class="btn btn-success" id="signupButton" type="submit">
+          <Button variant="success" id="signupButton" type="submit">
             Create New Account
           </Button>
         </div>

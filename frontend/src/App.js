@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./App.css";
 import axios from "axios";
 import { ApiMain } from "./Common";
+import { Heading } from "./Common/Heading";
 import { BrowserRouter, Route } from "react-router-dom";
 import { Routes } from "react-router";
 import { LandingPage, Login, Signup } from "./Pages";
@@ -15,7 +16,6 @@ function App() {
   const [userId, setUserId] = useState();
   const [updateToken, setUpdateToken] = useState();
 
-  //   const api = new ApiMain();
 
   // ENTER YOUR EC2 PUBLIC IP/URL HERE
   const ec2_url = "";
@@ -50,14 +50,15 @@ function App() {
   //       setUpdateToken(token);
   //       console.log(username, userId, userType);
   //     });
-  // }, [updateToken, token]);
+  // }, [updateToken, token])
 
   return (
     <div className="container">
       <BrowserRouter>
+        <Heading token={updateToken} setToken={setToken} />
         <Routes>
           <Route exact path="/" element={<LandingPage token={token} username={username} userType={userType} />} />
-          <Route path="/newaccount" element={<Signup setToken={setToken} token={token} />} />
+          <Route path="/signup" element={<Signup setToken={setToken} token={token} />} />
           <Route path="/login" element={<Login setToken={setToken} token={token} />} />
         </Routes>
       </BrowserRouter>
