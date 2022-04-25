@@ -26,31 +26,31 @@ function App() {
 
   const api = new ApiMain();
 
-  // useEffect(() => {
-  //   const tokenn = localStorage.getItem("token");
-  //   api
-  //     .checkUser(tokenn)
-  //     .then((res) => {
-  //       console.log("token checked");
-  //       setToken(tokenn);
-  //       if (res.status === 200) {
-  //         setUserName(res.data.username);
-  //         setUserType(res.data.user_type);
-  //         setUserId(res.data.id);
-  //       } else {
-  //         setUserName(null);
-  //         setUserType(null);
-  //         setUserId(null);
-  //       }
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     })
-  //     .finally(() => {
-  //       setUpdateToken(token);
-  //       console.log(username, userId, userType);
-  //     });
-  // }, [updateToken, token])
+  useEffect(() => {
+    const tokenn = localStorage.getItem("token");
+    api
+      .checkUser(tokenn)
+      .then((res) => {
+        console.log("token checked");
+        setToken(tokenn);
+        if (res.status === 200) {
+          setUserName(res.data.username);
+          setUserType(res.data.user_type);
+          setUserId(res.data.id);
+        } else {
+          setUserName(null);
+          setUserType(null);
+          setUserId(null);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {
+        setUpdateToken(token);
+        console.log(username, userId, userType);
+      });
+  }, [updateToken, token]);
 
   return (
     <div className="container">
