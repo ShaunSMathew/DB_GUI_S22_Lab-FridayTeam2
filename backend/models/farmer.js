@@ -1,6 +1,7 @@
 const knex = require('../knex.js');
 
 const FARMER_TABLE = 'farmer';
+const PRODUCT_TABLE = 'product';
 
 const createNewFarmer = async (username) => {
 
@@ -41,10 +42,38 @@ const deleteAddress = async(body, farmerUser) =>{
     const result = await address;
     return result;
 };
+const searchFarmerByLocation = async(street, city, state, zip)=>{
+    const query = knex(FARMER_TABLE)
+        .where((builder)=>{
+            if(street){
+                builder.where('street_address', street);
+            }
+        })
+        .where((builder)=>{
+            if(city){
+                builder.where('city', city);
+            }
+        })
+        .where((builder)=>{
+            if(state){
+                builder.where('state',state);
+            }
+        })
+        .where((builder)=>{
+            if(zip){
+                builder.where('zip',zip);
+            }
+        })
+        const result = await query;
+        return result;
+};
+
+
 module.exports = {
     createNewFarmer,
     findUserByUsername,
     changeAddress,
     deleteAddress,
-    updateProfile
+    updateProfile,
+    searchFarmerByLocation
 };
