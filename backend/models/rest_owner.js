@@ -12,7 +12,8 @@ const createNewOwner = async (username, address, phone_num) => {
 };
 
 const findUserByUsername = async (username) => {
-    const query = knex(REST_OWNER_TABLE).where({ username });
+    const query = knex(REST_OWNER_TABLE).where({ username : username });
+    console.log(query);
     const result = await query;
     return result;
 };

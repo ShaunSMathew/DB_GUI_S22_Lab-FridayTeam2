@@ -1,10 +1,12 @@
 const express = require('express');
 const farmer = require('../models/farmer');
+const product = require('../models/product');
 const router = express.Router();
 
 router.get('/', async (req, res, next) => {
     try {
         const user = req.user;
+        console.log("user:", user);
         const farmer = await farmer.findUserByUsername(user.username);
         res.status(201).json(farmer);
     } catch (err) {
@@ -18,9 +20,9 @@ router.post('/product', async (req, res, next) => {
     try {
         const user = req.user;
         const body = req.body;
+        console.log(user);
         console.log(body);
-        const farmer = await farmer.findUserByUsername(user.username);
-        result = await order.createNewOrder(body.name, body.price, body.amount, farmer.username);
+        result = await product.createNewProduct(body.name, body.price, body.amount, user.username);
         res.status(201).json(result);
     } catch (err) {
         console.error('Failed to create new product:', err);

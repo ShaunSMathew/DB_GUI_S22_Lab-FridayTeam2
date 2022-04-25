@@ -1,3 +1,4 @@
+drop database db;
 USE db;
 
 create database db;
