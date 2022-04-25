@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import "./App.css";
 import axios from "axios";
+import { ApiMain } from "./Common";
+import { Heading } from "./Common/Heading";
 import { BrowserRouter, Route } from "react-router-dom";
 import { Routes } from "react-router";
 import { LandingPage, Login, Signup } from "./Pages";
@@ -14,7 +16,6 @@ function App() {
   const [userId, setUserId] = useState();
   const [updateToken, setUpdateToken] = useState();
 
-  //   const api = new ApiMain();
 
   // ENTER YOUR EC2 PUBLIC IP/URL HERE
   const ec2_url = "";
@@ -23,29 +24,42 @@ function App() {
   // USE localhost OR ec2_url ACCORDING TO ENVIRONMENT
   const url = ec2 ? ec2_url : "localhost";
 
+  const api = new ApiMain();
+
+  // useEffect(() => {
+  //   const tokenn = localStorage.getItem("token");
+  //   api
+  //     .checkUser(tokenn)
+  //     .then((res) => {
+  //       console.log("token checked");
+  //       setToken(tokenn);
+  //       if (res.status === 200) {
+  //         setUserName(res.data.username);
+  //         setUserType(res.data.user_type);
+  //         setUserId(res.data.id);
+  //       } else {
+  //         setUserName(null);
+  //         setUserType(null);
+  //         setUserId(null);
+  //       }
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     })
+  //     .finally(() => {
+  //       setUpdateToken(token);
+  //       console.log(username, userId, userType);
+  //     });
+  // }, [updateToken, token])
+
   return (
     <div className="container">
       <BrowserRouter>
+        <Heading token={updateToken} setToken={setToken} />
         <Routes>
-          <Route
-            exact
-            path="/"
-            element={
-              <LandingPage
-                token={token}
-                username={username}
-                userType={userType}
-              />
-            }
-          />
-          <Route
-            path="/signup"
-            element={<Signup setToken={setToken} token={token} />}
-          />
-          <Route
-            path="/login"
-            element={<Login setToken={setToken} token={token} />}
-          />
+          <Route exact path="/" element={<LandingPage token={token} username={username} userType={userType} />} />
+          <Route path="/signup" element={<Signup setToken={setToken} token={token} />} />
+          <Route path="/login" element={<Login setToken={setToken} token={token} />} />
         </Routes>
       </BrowserRouter>
     </div>
