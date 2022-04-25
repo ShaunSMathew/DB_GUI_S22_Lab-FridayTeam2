@@ -1,6 +1,7 @@
 const knex = require('../knex.js');
 
 const FARMER_TABLE = 'farmer';
+const PRODUCT_TABLE = 'product';
 
 const createNewFarmer = async (username) => {
 
@@ -41,6 +42,7 @@ const deleteAddress = async(body, farmerUser) =>{
     const result = await address;
     return result;
 };
+
 module.exports = {
     createNewFarmer,
     findUserByUsername,
