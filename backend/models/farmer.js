@@ -41,10 +41,24 @@ const deleteAddress = async(body, farmerId) =>{
     const result = await address;
     return result;
 }
+
+const addNumRatings = async(farmerId) =>{
+    const qurey = knex(FARMER_TABLE).where({id : farmerId}).update({num_of_ratings: (num_of_ratings+1)}); 
+    const result = await qurey;
+    return result;
+}
+
+const addSumRatings = async(farmerId, rating) =>{
+    const qurey = knex(FARMER_TABLE).where({id : farmerId}).update({ratings_sum: (ratings_sum+rating)}); 
+    const result = await qurey;
+    return result;
+}
 module.exports = {
     createNewFarmer,
     findUserByUsername,
     changeAddress,
     deleteAddress,
-    updateProfile
+    updateProfile,
+    addNumRatings,
+    addSumRatings
 };

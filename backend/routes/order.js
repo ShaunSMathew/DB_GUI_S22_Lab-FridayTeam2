@@ -8,13 +8,13 @@ router.post('/', async (req, res, next) => {
     try {
         const body = req.body;
         const user = req.user;
-        const rest_owner = await rest_owner.findUserByUsername(user.username);
-        const product = await product.findProductByID(body.product_id);
+        const rest_owner = await rest_owner.findUserByUsername(user.username); //find user
+        const product = await product.findProductByID(body.product_id); //find product
         if(product.amount < body.amount){
             const err = { message: "amount not enough" };
             throw err;
         }
-        const update = await product.updateAmount(body.amount);
+        const update = await product.updateAmount(body.product_id, body.amount);//update amount
         const result = await order.createNewOrder(body.farmer_username, rest_owner.username, body.product_id, body.amount, body.tip);
         res.status(201).json(result);
     } catch (err) {
