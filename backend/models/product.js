@@ -1,7 +1,6 @@
 const knex = require('../knex.js');
 
 const PRODUCT_TABLE = 'product';
-const FARMER_TABLE = 'farmer';
 
 const getProductByFarmer = async (username) => { //Returns a list of all products listed with that farmer's username
     const query = knex(PRODUCT_TABLE).where('farmer_username', username);
