@@ -54,7 +54,24 @@ router.get('/productByFarmer', async(req, res, next)=>{ //Accepts a farmer's use
     next();
 });
 
-router.get('/searchFarmersByLocation', async(req, res, next)=>{ //
+router.get('/productByTag', async(req, res, next)=>{
+    try{
+        const hashtag = req.query.hashtag;
+        const results = await products.getProductByTag(hashtag);
+        res.status(200).json({
+            message: 'Products retrieved',
+            results: results
+        });
+    }
+    catch(error){
+        res.status(500).json({
+            message:'Something went wrong. Try a different tag'
+        });
+    }
+    next();
+});
+
+router.get('/farmersByLocation', async(req, res, next)=>{ //
     try{
         const street = req.query.street_address;
         const city = req.query.city;
@@ -73,6 +90,8 @@ router.get('/searchFarmersByLocation', async(req, res, next)=>{ //
         });
     }
     next();
-})
+});
+
+
 
 module.exports = router;

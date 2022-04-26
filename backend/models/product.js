@@ -62,6 +62,16 @@ const getProducts = async(id, name, amount, price) =>{ //This returns products b
         return result;
 };
 
+const getProductByTag = async(tag)=>{
+    const query = knex(PRODUCT_TABLE)
+    .modify(function(joinquery){
+        if(tag){
+            joinquery.join('tags','product.id','=','tags.product_id' );
+        }
+    })
+    const result = await query;
+    return result;
+};
 
 module.exports = {
     getProductByFarmer,
@@ -69,5 +79,6 @@ module.exports = {
     putProduct,
     deleteProduct,
     getProducts,
-    getProductById
+    getProductById,
+    getProductByTag
 }
