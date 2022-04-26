@@ -18,13 +18,13 @@ export const Heading = (props) => {
   }, [props.token]);
 
   const pr = () => {
-    setIsLoggedIn(true);
+    setIsLoggedIn(!isLoggedIn);
   };
 
   return (
     <header>
       <div className="bg-dark d-flex flex-row justify-content-end align-items-end pb-2 ps-4 pe-2 m-auto">
-        <button onClick={pr}>login</button>
+        <button onClick={pr}>Toggle</button>
         <Link to="/" class="me-auto">
           {/* <img
             id="logo"
@@ -42,8 +42,8 @@ export const Heading = (props) => {
           </Link>
         )}
         {isLoggedIn && (
-          <Link to="" class="btn btn-outline-info ms-2">
-            My Account
+          <Link to="/profile" class="btn btn-outline-info ms-2">
+            Your Profile
           </Link>
         )}
         {isLoggedIn && (

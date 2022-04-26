@@ -5,7 +5,7 @@ import { ApiMain } from "./Common";
 import { Heading } from "./Common/Heading";
 import { BrowserRouter, Route } from "react-router-dom";
 import { Routes } from "react-router";
-import { LandingPage, Login, Signup } from "./Pages";
+import { LandingPage, Login, Signup, Profile } from "./Pages";
 
 // React functional component
 function App() {
@@ -60,6 +60,7 @@ function App() {
           <Route exact path="/" element={<LandingPage token={token} username={username} userType={userType} />} />
           <Route path="/signup" element={<Signup setToken={setToken} token={token} />} />
           <Route path="/login" element={<Login setToken={setToken} token={token} />} />
+          <Route path="/profile" element={<Profile token={token} username={username} userType={userType}/>}/>
         </Routes>
       </BrowserRouter>
     </div>
