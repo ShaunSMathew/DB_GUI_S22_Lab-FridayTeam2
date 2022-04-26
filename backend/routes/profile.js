@@ -62,6 +62,31 @@ router.put('/:username', async (req, res, next) => {
     next();
 });
 
+router.delete('/:username/address', async(req, res, next)=>{ //delete users address
+    try{
+        const user = req.body.user;
+        // const info = req.body;
+        const id = req.user.id;
+        const farmers = await farmer.findUserByUsername(req.params.username);
+        const rest_owners = await rest_owner.findUserByUsername(req.params.username);
+        let result;
+        if (farmers.length > 0) {
+            console.log("Deleting address of farmer with id: ". user.toString());
+            result = await farmer.deleteAddress( user);
+        }
+        if (rest_owners.length > 0) 
+            console.log("Deleting address of rest_owner with id: ". user.toString());
+            result = await rest_owner.deleteAddress( user);
+        res.status(200).json(result);
+    }
+    catch(err){
+        console.error('Failed to delete address for farmer with id: ', user.toString());
+        res.status(400).json({message:err.toString()});
+    }
+    next();
+
+});
+
 router.post('/:username/product', async (req, res, next) => {
     try {
         const body = req.body;
@@ -92,6 +117,45 @@ router.delete('/:username/product', async (req, res, next) => {
     try {
         const body = req.body;
         const result = await product.deleteProduct(body.id);
+        res.status(201).json(result);
+    } catch (err) {
+        console.error('Failed to delete product:', err);
+        res.status(500).json({ message: err.toString() });
+    }
+
+    next();  
+});
+
+router.post('/:username/schedule', async (req, res, next) => {
+    try {
+        const body = req.body;
+        const result = await schedule.postEntry(body.date, body.time, body.entry, req.params.username);
+        res.status(201).json(result);
+    } catch (err) {
+        console.error('Failed to post product:', err);
+        res.status(500).json({ message: err.toString() });
+    }
+
+    next();  
+});
+
+router.put('/:username/schedule', async (req, res, next) => {
+    try {
+        const body = req.body;
+        const result = await schedule.putEntry(body.id, body.date, body.time, body.entry, req.params.username);
+        res.status(201).json(result);
+    } catch (err) {
+        console.error('Failed to edit product:', err);
+        res.status(500).json({ message: err.toString() });
+    }
+
+    next();  
+});
+
+router.delete('/:username/schedule', async (req, res, next) => {
+    try {
+        const body = req.body;
+        const result = await schedule.deleteEntry(body.id);
         res.status(201).json(result);
     } catch (err) {
         console.error('Failed to delete product:', err);
