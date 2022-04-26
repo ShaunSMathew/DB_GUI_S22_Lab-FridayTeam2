@@ -54,7 +54,7 @@ router.get('/productByFarmer', async(req, res, next)=>{ //Accepts a farmer's use
     next();
 });
 
-router.get('/searchFarmersByLocation', async(req, res, next)=>{
+router.get('/searchFarmersByLocation', async(req, res, next)=>{ //
     try{
         const street = req.query.street_address;
         const city = req.query.city;

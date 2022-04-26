@@ -47,6 +47,8 @@ router.put('/address', async(req, res, next)=>{ //Change a farmer's address
     next();
 
 });
+
+
 router.delete('/address', async(req, res, next)=>{ //delete a farmer's address
     try{
         const user = req.body.user;
