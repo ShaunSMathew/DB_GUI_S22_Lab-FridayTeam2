@@ -9,6 +9,14 @@ router.post('/', async (req, res, next) => {
     try {
         const body = req.body;
         console.log(body);
+        if (!body.username)
+            throw "No username entered";
+        if (body.password.length < 9)
+            throw "Password must be longer than 8 digits"; 
+        const users = await user.findUserByUsername(body.username);
+        if (users.length > 0)
+            throw "Username already taken";
+        
         await user.createNewUser(body.username, body.password);
         let result;
         if(body.user_type == 'farmer')
