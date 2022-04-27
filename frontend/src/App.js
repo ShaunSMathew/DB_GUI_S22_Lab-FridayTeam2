@@ -36,11 +36,9 @@ function App() {
         if (res.status === 200) {
           setUserName(res.data.username);
           setUserType(res.data.user_type);
-          setUserId(res.data.id);
         } else {
           setUserName(null);
           setUserType(null);
-          setUserId(null);
         }
       })
       .catch((err) => {
