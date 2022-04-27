@@ -1,7 +1,6 @@
 const knex = require('../knex.js');
 
 const PRODUCT_TABLE = 'product';
-const FARMER_TABLE = 'farmer';
 
 const getProductByFarmer = async (username) => { //Returns a list of all products listed with that farmer's username
     const query = knex(PRODUCT_TABLE).where('farmer_username', username);
@@ -62,6 +61,16 @@ const getProducts = async(id, name, amount, price) =>{ //This returns products b
         return result;
 };
 
+const getProductByTag = async(tag)=>{
+    const query = knex(PRODUCT_TABLE)
+    .modify(function(joinquery){
+        if(tag){
+            joinquery.join('tags','product.id','=','tags.product_id' );
+        }
+    })
+    const result = await query;
+    return result;
+};
 
 module.exports = {
     getProductByFarmer,
@@ -69,5 +78,6 @@ module.exports = {
     putProduct,
     deleteProduct,
     getProducts,
-    getProductById
+    getProductById,
+    getProductByTag
 }

@@ -46,6 +46,14 @@ CREATE TABLE `db`.`product` (
     UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE
 );
 
+CREATE TABLE `db`.`tags`(
+    `product_id` INT NOT NULL,
+    `hashtag` VARCHAR(20),
+    FOREIGN KEY (product_id) REFERENCES product(id)
+);
+SELECT * FROM `db`.`product`;
+INSERT INTO `db`.`tags` (product_id, hashtag) VALUES (1, 'vegetable');
+select * from db.tags;
 INSERT INTO `db`.`product` (`name`, `price`, `amount`, `farmer_username`) VALUES ('corn', '12.00', '3', 'testUser1');
 
 -- create rest_owner (Restaurant Owner) table in test
@@ -98,4 +106,3 @@ CREATE TABLE `db`.`schedule` (
 
 INSERT INTO `db`.`schedule` (`date`, `time`, `entry`, `farmer_username`)
 VALUES ('2022-02-01', '12:00', 'Potato delivery', 'testUser1');
-
