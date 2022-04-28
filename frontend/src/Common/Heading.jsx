@@ -42,7 +42,7 @@ export const Heading = (props) => {
           </Link>
         )}
         {isLoggedIn && (
-          <Link to="/profile" class="btn btn-outline-info ms-2">
+          <Link to="/profile/:username" class="btn btn-outline-info ms-2">
             Your Profile
           </Link>
         )}
