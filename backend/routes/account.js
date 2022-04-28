@@ -9,12 +9,20 @@ router.post('/', async (req, res, next) => {
     try {
         const body = req.body;
         console.log(body);
+        if (!body.username)
+            throw "No username entered";
+        if (body.password.length < 9)
+            throw "Password must be longer than 8 digits"; 
+        const users = await user.findUserByUsername(body.username);
+        if (users.length > 0)
+            throw "Username already taken";
+        
         await user.createNewUser(body.username, body.password);
-        let result;
         if(body.user_type == 'farmer')
-            result = farmer.createNewFarmer(body.username);
+            await farmer.createNewFarmer(body.username);
         else
-            result = rest_owner.createNewOwner(body.username);
+            await rest_owner.createNewOwner(body.username);
+        let result = {username: body.username, password: body.password};
         res.status(201).json(result);
     } catch (err) {
         console.error('Failed to create new user:', err);

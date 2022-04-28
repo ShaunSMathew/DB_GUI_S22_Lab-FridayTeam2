@@ -5,6 +5,8 @@ const healthRoute = require("./routes/health");
 const accountRoutes = require("./routes/account");
 const sessionRoutes = require("./routes/session");
 const profileRoutes = require("./routes/profile");
+const searchRoutes = require("./routes/search");
+const orderRoutes = require("./routes/order");
 
 // set up some configs for express.
 const config = {
@@ -29,6 +31,8 @@ const {
 app.use("/health", healthRoute);
 app.use("/newaccount", accountRoutes);
 app.use("/login", sessionRoutes);
+app.use("/search", authenticateJWT, searchRoutes);
+app.use("/order", authenticateJWT, orderRoutes);
 app.use("/profile", authenticateJWT, profileRoutes);
 
 // connecting the express object to listen on a particular port as defined in the config object.
