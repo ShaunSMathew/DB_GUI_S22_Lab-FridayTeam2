@@ -13,6 +13,7 @@ export const LandingPage = () => {
       <Link to="/login" class="btn btn-primary m-3">
         Log In
       </Link>
+      
     </div>
   );
 };

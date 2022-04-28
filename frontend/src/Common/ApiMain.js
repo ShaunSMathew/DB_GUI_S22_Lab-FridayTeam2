@@ -18,4 +18,10 @@ export class ApiMain {
       },
     });
   }
+  login(user) {
+    return axios.post(`${this.url}/login`, user);
+  }
+  getProducts() {
+    return axios.get(`${this.url}/`);
+  }
 }
