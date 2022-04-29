@@ -1,4 +1,5 @@
 require("dotenv").config();
+const cors = require("cors");
 const express = require("express");
 const bodyParser = require("body-parser");
 const farmerRoutes = require("./routes/farmer");
@@ -20,7 +21,7 @@ const app = express();
 
 // use body parser
 app.use(bodyParser.json());
-
+app.use(cors());
 // include authentification middleware
 const {
   authenticateJWT,

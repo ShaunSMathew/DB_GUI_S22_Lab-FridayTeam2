@@ -13,29 +13,30 @@ export const Login = (props) => {
   const navigate = useNavigate();
   const api = new ApiMain();
 
-  const handleSubmit = (event) => {
-    const form = event.currentTarget;
-    if (form.checkValidity() === false) {
-      event.preventDefault();
-      event.stopPropagation();
-      setValidated(true);
-    } else {
-      let newUser = new User(username, password);
-      newUser["user_type"] = user_type;
-      api
-        .signup(newUser)
-        .then((res) => {
-          props.setToken(res.data.data.jwt);
-          localStorage.setItem("token", res.data.data.jwt);
-          navigate("/");
-          console.log(res.data.data.jwt);
-        })
-        .catch((err) => {
-          console.log(err.data.data);
-          alert(err.data.data);
-        });
-    }
-  };
+ const handleSubmit = (e) => {
+   const form = e.currentTarget;
+   e.preventDefault();
+   if (form.checkValidity() === false) {
+     e.stopPropagation();
+     setValidated(true);
+   } else {
+     let newUser = new User(username, password);
+     api
+       .login(newUser)
+       .then((res) => {
+         //  props.setToken(res.data.data.jwt);
+         //  localStorage.setItem("token", res.data.data.jwt);
+         console.log(res);
+         navigate("/");
+         console.log("logged in");
+       })
+       .catch((err) => {
+         console.log(err);
+         alert(err);
+       });
+   }
+ };
+
   if (props.token) {
     return (
       <div class="w-75 mx-auto">

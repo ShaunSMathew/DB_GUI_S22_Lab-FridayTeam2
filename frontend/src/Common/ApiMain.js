@@ -12,10 +12,12 @@ export class ApiMain {
   }
 
   checkUser(token) {
-    return axios.get(`${this.url}/login`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    return axios.get(`${this.url}/login`);
+  }
+  login(user) {
+    return axios.post(`${this.url}/login`, user);
+  }
+  getProducts() {
+    return axios.get(`${this.url}/`);
   }
 }

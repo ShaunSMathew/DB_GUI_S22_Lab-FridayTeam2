@@ -5,7 +5,8 @@ import { ApiMain } from "./Common";
 import { Heading } from "./Common/Heading";
 import { BrowserRouter, Route } from "react-router-dom";
 import { Routes } from "react-router";
-import { LandingPage, Login, Signup, Profile } from "./Pages";
+import { LandingPage, Login, Signup, Profile, EditProfile, EditProduct } from "./Pages";
+import { User } from "./Common";
 
 // React functional component
 function App() {
@@ -15,7 +16,6 @@ function App() {
   const [userType, setUserType] = useState();
   const [userId, setUserId] = useState();
   const [updateToken, setUpdateToken] = useState();
-
 
   // ENTER YOUR EC2 PUBLIC IP/URL HERE
   const ec2_url = "";
@@ -36,11 +36,9 @@ function App() {
         if (res.status === 200) {
           setUserName(res.data.username);
           setUserType(res.data.user_type);
-          setUserId(res.data.id);
         } else {
           setUserName(null);
           setUserType(null);
-          setUserId(null);
         }
       })
       .catch((err) => {
@@ -60,7 +58,10 @@ function App() {
           <Route exact path="/" element={<LandingPage token={token} username={username} userType={userType} />} />
           <Route path="/signup" element={<Signup setToken={setToken} token={token} />} />
           <Route path="/login" element={<Login setToken={setToken} token={token} />} />
-          <Route path="/profile" element={<Profile token={token} username={username} userType={userType}/>}/>
+          <Route path="/profile/:username" element={<Profile token={token} username={username} userType={userType} />} />
+          <Route path="/profile/:username/editProfile" element={<EditProfile token={token} username={username} userType={userType} />} />
+          <Route path="/profile/:username/:id/editProduct" element={<EditProduct token={token} username={username} userType={userType} />} />
+          <Route path="/profile/:username/addProduct" element={<EditProduct token={token} username={username} userType={userType} />} />
         </Routes>
       </BrowserRouter>
     </div>

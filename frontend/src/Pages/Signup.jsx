@@ -20,8 +20,8 @@ export const Signup = (props) => {
       event.stopPropagation();
       setValidated(true);
     } else {
-      let newUser = new User(username, password, user_type);
-      // newUser["user_type"] = user_type;
+      let newUser = new User(username, password);
+      newUser["user_type"] = user_type;
       api
         .signup(newUser)
         .then((res) => {
