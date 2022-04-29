@@ -18,14 +18,41 @@ router.get('/:username', async (req, res, next) => {
             result.reviews = await review.getReviewByFarmer(req.params.username);
             result.schedule = await schedule.getScheduleByFarmer(req.params.username);
         }
-        if (rest_owners.length > 0) 
+        if (rest_owners.length > 0) {
             result = rest_owners[0];
+        }
         if (result.num_of_ratings > 0) {
             result.average_rating = result.ratings_sum / result.num_of_ratings;
         }
         res.status(201).json(result);
     } catch (err) {
         console.error('Failed to get profile information:', err);
+        res.status(500).json({ message: err.toString() });
+    }
+
+    next();
+});
+
+router.get('/:username/products', async (req, res, next) => {
+    try {
+        const query = await product.getProductByFarmer(req.params.username);
+        const result = await query;
+        res.status(201).json(result);
+    } catch (err) {
+        console.error('Failed to get products:', err);
+        res.status(500).json({ message: err.toString() });
+    }
+
+    next();
+});
+
+router.get('/:username/reviews', async (req, res, next) => {
+    try {
+        const query = await review.getReviewByFarmer(req.params.username);
+        const result = await query;
+        res.status(201).json(result);
+    } catch (err) {
+        console.error('Failed to get order history:', err);
         res.status(500).json({ message: err.toString() });
     }
 
