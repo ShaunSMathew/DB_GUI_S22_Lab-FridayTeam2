@@ -8,8 +8,8 @@ const getProductByFarmer = async (username) => { //Returns a list of all product
     return result;
 };
 
-const postProduct = async (name, price, amount) => {
-    const query = knex(PRODUCT_TABLE).insert({name, price, amount});
+const postProduct = async (name, price, amount, farmer_username) => {
+    const query = knex(PRODUCT_TABLE).insert({name, price, amount, farmer_username});
     const result = await query;
     const product = knex(PRODUCT_TABLE).where('id', result);
     return product;
