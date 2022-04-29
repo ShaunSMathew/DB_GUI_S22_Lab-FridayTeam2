@@ -46,8 +46,8 @@ router.put('/address', async(req, res, next)=>{ //Change a farmer's address
     }
 
     next();
-
 });
+
 router.delete('/address', async(req, res, next)=>{ //delete a farmer's address
     try{
         // const info = req.body;
@@ -58,6 +58,38 @@ router.delete('/address', async(req, res, next)=>{ //delete a farmer's address
     }
     catch(err){
         console.error('Failed to delete address for farmer with id: ', id.toString());
+        res.status(400).json({message:err.toString()});
+    }
+    next();
+});
+
+router.put('/picture', async(req, res, next)=>{ 
+    try{
+        const info = req.body;
+        const id = req.user.id;
+        console.log("Making changes to address of farmer  with id: ", id.toString());
+        const result = await farmer.changePicture(info, id);
+        res.status(200).json(result);
+    }
+    catch(err){
+        console.error("Failed to edit picture: ", err);
+        res.status(400).json({message:err.toString()});
+    }
+
+    next();
+
+});
+
+router.delete('/picture', async(req, res, next)=>{ //delete a farmer's picture
+    try{
+        // const info = req.body;
+        const id = req.user.id;
+        console.log("Deleting picture of farmer with id: ". id.toString());
+        const result = await farmer.deletePicture(id);
+        res.status(200).json(result);
+    }
+    catch(err){
+        console.error('Failed to delete picture for farmer with id: ', id.toString());
         res.status(400).json({message:err.toString()});
     }
     next();
