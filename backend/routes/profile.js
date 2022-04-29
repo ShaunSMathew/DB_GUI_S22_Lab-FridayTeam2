@@ -52,7 +52,20 @@ router.get('/:username/reviews', async (req, res, next) => {
         const result = await query;
         res.status(201).json(result);
     } catch (err) {
-        console.error('Failed to get order history:', err);
+        console.error('Failed to get reviews:', err);
+        res.status(500).json({ message: err.toString() });
+    }
+
+    next();
+});
+
+router.get('/:username/schedule', async (req, res, next) => {
+    try {
+        const query = await schedule.getScheduleByFarmer(req.params.username);
+        const result = await query;
+        res.status(201).json(result);
+    } catch (err) {
+        console.error('Failed to get schedule:', err);
         res.status(500).json({ message: err.toString() });
     }
 
