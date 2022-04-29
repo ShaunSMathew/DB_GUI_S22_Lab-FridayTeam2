@@ -18,9 +18,9 @@ const findUserByUsername = async (username) => {
     return result;
 };
 
-const updateProfile = async (username, street_address, city, state, zip, phone_num) => {
+const updateProfile = async (username, street_address, city, state, zip, phone_num, profile_pic) => {
     const query = await knex(FARMER_TABLE).where({ username }).update({
-        street_address, city, state, zip, phone_num
+        street_address, city, state, zip, phone_num, profile_pic
     });
     const result = await knex(FARMER_TABLE).where({ username });
     return result;
