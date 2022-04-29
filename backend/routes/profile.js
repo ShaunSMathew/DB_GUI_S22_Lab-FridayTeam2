@@ -18,8 +18,7 @@ router.get('/:username', async (req, res, next) => {
             result.reviews = await review.getReviewByFarmer(req.params.username);
             result.schedule = await schedule.getScheduleByFarmer(req.params.username);
         }
-        if (rest_owners.length > 0) 
-            result = rest_owners[0];
+        if (rest_owners.length > 0) result = rest_owners[0];
         res.status(201).json(result);
     } catch (err) {
         console.error('Failed to get profile information:', err);
@@ -51,8 +50,8 @@ router.put('/:username', async (req, res, next) => {
         if (farmers.length > 0) {
             result = await farmer.updateProfile(req.params.username, body.street_address, body.city, body.state, body.zip, body.phone_num);
         }
-        if (rest_owners.length > 0) 
-            result = await rest_owner.updateProfile(req.params.username, body.street_address, body.city, body.state, body.zip, body.phone_num);
+        if (rest_owners.length > 0)
+          result = await rest_owner.updateProfile(req.params.username, body.street_address, body.city, body.state, body.zip, body.phone_num);
         res.status(201).json(result);
     } catch (err) {
         console.error('Failed to update profile information:', err);
@@ -62,30 +61,30 @@ router.put('/:username', async (req, res, next) => {
     next();
 });
 
-router.post('/:username/product', async (req, res, next) => {
-    try {
-        const body = req.body;
-        const result = await product.postProduct(body.name, body.price, body.amount);
-        res.status(201).json(result);
-    } catch (err) {
-        console.error('Failed to post product:', err);
-        res.status(500).json({ message: err.toString() });
-    }
+router.post("/:username/product", async (req, res, next) => {
+  try {
+    const body = req.body;
+    const result = await product.postProduct(body.name, body.price, body.amount);
+    res.status(201).json(result);
+  } catch (err) {
+    console.error("Failed to post product:", err);
+    res.status(500).json({ message: err.toString() });
+  }
 
-    next();  
+  next();
 });
 
-router.put('/:username/product', async (req, res, next) => {
-    try {
-        const body = req.body;
-        const result = await product.putProduct(body.id, body.name, body.price, body.amount);
-        res.status(201).json(result);
-    } catch (err) {
-        console.error('Failed to edit product:', err);
-        res.status(500).json({ message: err.toString() });
-    }
+router.put("/:username/product", async (req, res, next) => {
+  try {
+    const body = req.body;
+    const result = await product.putProduct(body.id, body.name, body.price, body.amount);
+    res.status(201).json(result);
+  } catch (err) {
+    console.error("Failed to edit product:", err);
+    res.status(500).json({ message: err.toString() });
+  }
 
-    next();  
+  next();
 });
 
 router.delete('/:username/product', async (req, res, next) => {
@@ -98,7 +97,7 @@ router.delete('/:username/product', async (req, res, next) => {
         res.status(500).json({ message: err.toString() });
     }
 
-    next();  
+    next();
 });
 
 module.exports = router;

@@ -5,16 +5,16 @@ import { User } from "../Common";
 import { Link } from "react-router-dom";
 export const Profile = (props) => {
   const [user, setUser] = useState(undefined);
+  const [profile, setProfile] = useState(undefined);
   const [products, setProducts] = useState({});
 
   // const params = useParams();
   const api = new ApiMain();
 
   useEffect(() => {
-    api.getProducts().then((res) => {
-      const products = res.data;
-      setProducts([333, 33333]);
-      console.log(products);
+    api.getProfile(user.username).then((res) => {
+      setProfile(res.data);
+      console.log(profile);
     });
   }, []);
   return (
@@ -38,7 +38,7 @@ export const Profile = (props) => {
         <Card.Header>Products</Card.Header>
         <Card.Body>
           <ListGroup variant="flush">
-            {/* {products.map((product) => {
+            {/* {products.map((products) => {
               return (
                 <ListGroup.Item>
                   Cras justo odio
