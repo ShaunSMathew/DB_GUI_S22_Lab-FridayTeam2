@@ -50,7 +50,7 @@ const changePicture = async (body, farmerUser) => {
     return result;
 };
 
-const deletePicture = async(body, farmerUser) =>{
+const deletePicture = async(farmerUser) =>{
     const deletePic = knex(FARMER_TABLE).where({username:farmerUser}).update({picture: " "}); 
     const result = await deletePic;
     return result;
