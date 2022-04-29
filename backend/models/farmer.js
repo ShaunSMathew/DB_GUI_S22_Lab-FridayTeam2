@@ -42,6 +42,20 @@ const deleteAddress = async(body, farmerUser) =>{
     const result = await address;
     return result;
 };
+
+const changePicture = async (body, farmerUser) => {
+    const changePic = knex(FARMER_TABLE).where({username: farmerUser}).update({picture: body.picture});
+    console.log(`Raw query for changePicture: `, changePic.toString());
+    const result = await changePic;
+    return result;
+};
+
+const deletePicture = async(farmerUser) =>{
+    const deletePic = knex(FARMER_TABLE).where({username:farmerUser}).update({picture: " "}); 
+    const result = await deletePic;
+    return result;
+};
+
 const searchFarmerByLocation = async(street, city, state, zip)=>{
     const query = knex(FARMER_TABLE)
         .where((builder)=>{
@@ -68,12 +82,39 @@ const searchFarmerByLocation = async(street, city, state, zip)=>{
         return result;
 };
 
+const addNumRatings = async(username) =>{
+    const farmer = await knex(FARMER_TABLE).where({username});
+    if(farmer[0].num_of_ratings == null){
+        farmer[0].num_of_ratings = 0;
+    }
+    const num_of_ratings = farmer[0].num_of_ratings + 1;
+    const qurey = knex(FARMER_TABLE).where({username}).update({num_of_ratings: num_of_ratings}); 
+    console.log('addNumRatings:',qurey);
+    const result = await qurey;
+    return result;
+}
+
+const addSumRatings = async(username, rating) =>{
+    const farmer = await knex(FARMER_TABLE).where({username});
+    if(farmer[0].ratings_sum == null){
+        farmer[0].ratings_sum = 0;
+    }
+    const ratings_sum = farmer[0].ratings_sum + rating;
+    const qurey = knex(FARMER_TABLE).where({username}).update({ratings_sum: ratings_sum}); 
+    console.log('addNumRatings:',qurey);
+    const result = await qurey;
+    return result;
+}
 
 module.exports = {
     createNewFarmer,
     findUserByUsername,
     changeAddress,
     deleteAddress,
+    changePicture,
+    deletePicture,
     updateProfile,
-    searchFarmerByLocation
+    searchFarmerByLocation,
+    addNumRatings,
+    addSumRatings
 };

@@ -6,21 +6,39 @@ const router = express.Router();
 
 router.post('/', async (req, res, next) => {
     try {
-        const user = req.user;
         const body = req.body;
-        console.log(body);
-        const farmer = await farmer.findUserByUsername(user.username);
-        const rest_owner = await rest_owner.findUserByUsername(user.username);
-        farmer;
-        rest_owner;
-        result = await order.createNewOrder(farmer.id, rest_owner.id); 
-        res.status(201).json(result);
+        const user = req.user;
+        const update = await product.updateAmount(body.product_id, body.amount);//update amount
+        if(update == "err"){
+            res.status(500).json("amount not enough");
+        }else{
+            const result = await order.createNewOrder(body.farmer_username, user.username, body.product_id, body.amount, body.tip);
+            res.status(201).json(body);
+        }
     } catch (err) {
-        console.error('Failed to create new product:', err);
+        console.error('Failed to create new order:', err);
         res.status(500).json({ message: err.toString() });
     }
     next();
 });
+
+// router.post('/', async (req, res, next) => {
+//     try {
+//         const user = req.user;
+//         const body = req.body;
+//         console.log(body);
+//         const farmer = await farmer.findUserByUsername(user.username);
+//         const rest_owner = await rest_owner.findUserByUsername(user.username);
+//         farmer;
+//         rest_owner;
+//         result = await order.createNewOrder(farmer.id, rest_owner.id); 
+//         res.status(201).json(result);
+//     } catch (err) {
+//         console.error('Failed to create new product:', err);
+//         res.status(500).json({ message: err.toString() });
+//     }
+//     next();
+// });
 
 // GET /order?farmer=[farmer_id]&rest_owner=[rest_owner_id]
 router.get('/', async (req, res, next) => {
