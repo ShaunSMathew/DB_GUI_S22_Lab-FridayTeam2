@@ -42,6 +42,20 @@ const deleteAddress = async(body, farmerUser) =>{
     const result = await address;
     return result;
 };
+
+const changePicture = async (body, farmerUser) => {
+    const changePic = knex(FARMER_TABLE).where({username: farmerUser}).update({picture: body.picture});
+    console.log(`Raw query for changePicture: `, changePic.toString());
+    const result = await changePic;
+    return result;
+};
+
+const deletePicture = async(body, farmerUser) =>{
+    const deletePic = knex(FARMER_TABLE).where({username:farmerUser}).update({picture: " "}); 
+    const result = await deletePic;
+    return result;
+};
+
 const searchFarmerByLocation = async(street, city, state, zip)=>{
     const query = knex(FARMER_TABLE)
         .where((builder)=>{
@@ -97,6 +111,8 @@ module.exports = {
     findUserByUsername,
     changeAddress,
     deleteAddress,
+    changePicture,
+    deletePicture,
     updateProfile,
     searchFarmerByLocation,
     addNumRatings,
