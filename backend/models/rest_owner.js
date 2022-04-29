@@ -39,10 +39,27 @@ const deleteAddress = async(restUser) =>{
 };
 
 
+const changePicture = async (body, restUser) => {
+    const changePic = knex(REST_OWNER_TABLE).where({username: restUser}).update({picture: body.picture});
+    console.log(`Raw query for changePicture: `, changePic.toString());
+    const result = await changePic;
+    return result;
+};
+
+const deletePicture = async(restUser) =>{
+    const deletePic = knex(REST_OWNER_TABLE).where({username:restUser}).update({picture: " "}); 
+    const result = await deletePic;
+    return result;
+};
+
+
+
 module.exports = {
     createNewOwner,
     findUserByUsername,
     updateProfile,
     changeAddress,
-    deleteAddress
+    deleteAddress,
+    changePicture,
+    deletePicture
 };
