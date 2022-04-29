@@ -17,7 +17,7 @@ export class ApiMain {
   login(user) {
     return axios.post(`${this.url}/login`, user);
   }
-  getFarmer(username) {
+  getProfile(username) {
     return axios.get(`${this.url}/profile/${username}`);
   }
 }
