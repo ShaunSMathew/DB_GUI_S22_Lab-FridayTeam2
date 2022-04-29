@@ -4,6 +4,7 @@ const farmer = require('../models/farmer');
 const rest_owner = require('../models/rest_owner');
 const router = express.Router();
 
+
 // create new farmer or owner account
 router.post('/', async (req, res, next) => {
     try {

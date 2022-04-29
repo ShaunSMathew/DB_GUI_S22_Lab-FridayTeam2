@@ -17,8 +17,8 @@ export class ApiMain {
   login(user) {
     return axios.post(`${this.url}/login`, user);
   }
-  getProducts() {
-    return axios.get(`${this.url}/`);
+  getProfile(username) {
+    return axios.get(`${this.url}/profile/${username}`);
   }
   login(user) {
     return axios.post(`${this.url}/login`, user);
