@@ -2,9 +2,9 @@ const knex = require('../knex.js');
 
 const REST_OWNER_TABLE = 'rest_owner';
 
-const createNewOwner = async (username, address, phone_num) => {
+const createNewOwner = async (username) => {
 
-    const query = knex(REST_OWNER_TABLE).insert({ username: username, address: address, phone_num: phone_num});
+    const query = knex(REST_OWNER_TABLE).insert({ username });
     console.log('Raw query for createNewUser:', query.toString());
     const result = await query;
 
@@ -17,9 +17,9 @@ const findUserByUsername = async (username) => {
     return result;
 };
 
-const updateProfile = async (username, street_address, city, state, zip, phone_num) => {
+const updateProfile = async (username, street_address, city, state, zip, phone_num, profile_pic) => {
     const query = await knex(REST_OWNER_TABLE).where({ username }).update({
-        street_address, city, state, zip, phone_num
+        street_address, city, state, zip, phone_num, profile_pic
     });
     const result = await knex(REST_OWNER_TABLE).where({ username });
 };
@@ -39,10 +39,27 @@ const deleteAddress = async(restUser) =>{
 };
 
 
+const changePicture = async (body, restUser) => {
+    const changePic = knex(REST_OWNER_TABLE).where({username: restUser}).update({picture: body.picture});
+    console.log(`Raw query for changePicture: `, changePic.toString());
+    const result = await changePic;
+    return result;
+};
+
+const deletePicture = async(restUser) =>{
+    const deletePic = knex(REST_OWNER_TABLE).where({username:restUser}).update({picture: " "}); 
+    const result = await deletePic;
+    return result;
+};
+
+
+
 module.exports = {
     createNewOwner,
     findUserByUsername,
     updateProfile,
     changeAddress,
-    deleteAddress
+    deleteAddress,
+    changePicture,
+    deletePicture
 };

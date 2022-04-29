@@ -18,11 +18,54 @@ router.get('/:username', async (req, res, next) => {
             result.reviews = await review.getReviewByFarmer(req.params.username);
             result.schedule = await schedule.getScheduleByFarmer(req.params.username);
         }
-        if (rest_owners.length > 0) 
+        if (rest_owners.length > 0) {
             result = rest_owners[0];
+        }
+        if (result.num_of_ratings > 0) {
+            result.average_rating = result.ratings_sum / result.num_of_ratings;
+        }
         res.status(201).json(result);
     } catch (err) {
         console.error('Failed to get profile information:', err);
+        res.status(500).json({ message: err.toString() });
+    }
+
+    next();
+});
+
+router.get('/:username/products', async (req, res, next) => {
+    try {
+        const query = await product.getProductByFarmer(req.params.username);
+        const result = await query;
+        res.status(201).json(result);
+    } catch (err) {
+        console.error('Failed to get products:', err);
+        res.status(500).json({ message: err.toString() });
+    }
+
+    next();
+});
+
+router.get('/:username/reviews', async (req, res, next) => {
+    try {
+        const query = await review.getReviewByFarmer(req.params.username);
+        const result = await query;
+        res.status(201).json(result);
+    } catch (err) {
+        console.error('Failed to get reviews:', err);
+        res.status(500).json({ message: err.toString() });
+    }
+
+    next();
+});
+
+router.get('/:username/schedule', async (req, res, next) => {
+    try {
+        const query = await schedule.getScheduleByFarmer(req.params.username);
+        const result = await query;
+        res.status(201).json(result);
+    } catch (err) {
+        console.error('Failed to get schedule:', err);
         res.status(500).json({ message: err.toString() });
     }
 
@@ -49,10 +92,10 @@ router.put('/:username', async (req, res, next) => {
         const rest_owners = await rest_owner.findUserByUsername(req.params.username);
         let result;
         if (farmers.length > 0) {
-            result = await farmer.updateProfile(req.params.username, body.street_address, body.city, body.state, body.zip, body.phone_num);
+            result = await farmer.updateProfile(req.params.username, body.street_address, body.city, body.state, body.zip, body.phone_num, body.profile_pic);
         }
         if (rest_owners.length > 0) 
-            result = await rest_owner.updateProfile(req.params.username, body.street_address, body.city, body.state, body.zip, body.phone_num);
+            result = await rest_owner.updateProfile(req.params.username, body.street_address, body.city, body.state, body.zip, body.phone_num, body.profile_pic);
         res.status(201).json(result);
     } catch (err) {
         console.error('Failed to update profile information:', err);
@@ -90,7 +133,7 @@ router.delete('/:username/address', async(req, res, next)=>{ //delete users addr
 router.post('/:username/product', async (req, res, next) => {
     try {
         const body = req.body;
-        const result = await product.postProduct(body.name, body.price, body.amount);
+        const result = await product.postProduct(body.name, body.price, body.amount, req.params.username);
         res.status(201).json(result);
     } catch (err) {
         console.error('Failed to post product:', err);
@@ -100,10 +143,10 @@ router.post('/:username/product', async (req, res, next) => {
     next();  
 });
 
-router.put('/:username/product', async (req, res, next) => {
+router.put('/:username/product/:id', async (req, res, next) => {
     try {
         const body = req.body;
-        const result = await product.putProduct(body.id, body.name, body.price, body.amount);
+        const result = await product.putProduct(req.params.id, body.name, body.price, body.amount);
         res.status(201).json(result);
     } catch (err) {
         console.error('Failed to edit product:', err);
@@ -113,10 +156,10 @@ router.put('/:username/product', async (req, res, next) => {
     next();  
 });
 
-router.delete('/:username/product', async (req, res, next) => {
+router.delete('/:username/product/:id', async (req, res, next) => {
     try {
         const body = req.body;
-        const result = await product.deleteProduct(body.id);
+        const result = await product.deleteProduct(req.params.id);
         res.status(201).json(result);
     } catch (err) {
         console.error('Failed to delete product:', err);
@@ -139,10 +182,10 @@ router.post('/:username/schedule', async (req, res, next) => {
     next();  
 });
 
-router.put('/:username/schedule', async (req, res, next) => {
+router.put('/:username/schedule/:id', async (req, res, next) => {
     try {
         const body = req.body;
-        const result = await schedule.putEntry(body.id, body.date, body.time, body.entry, req.params.username);
+        const result = await schedule.putEntry(req.params.id, body.date, body.time, body.entry);
         res.status(201).json(result);
     } catch (err) {
         console.error('Failed to edit product:', err);
@@ -152,10 +195,10 @@ router.put('/:username/schedule', async (req, res, next) => {
     next();  
 });
 
-router.delete('/:username/schedule', async (req, res, next) => {
+router.delete('/:username/schedule/:id', async (req, res, next) => {
     try {
         const body = req.body;
-        const result = await schedule.deleteEntry(body.id);
+        const result = await schedule.deleteEntry(req.params.id);
         res.status(201).json(result);
     } catch (err) {
         console.error('Failed to delete product:', err);

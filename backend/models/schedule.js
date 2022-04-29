@@ -15,8 +15,8 @@ const postEntry = async (date, time, entry, farmer_username) => {
     return result;
 };
 
-const putEntry = async (date, time, entry, farmer_username) => {
-    const query = knex(SCHEDULE_TABLE).where('id', id).update({date, time, entry, farmer_username});
+const putEntry = async (id, date, time, entry) => {
+    const query = knex(SCHEDULE_TABLE).where('id', id).update({date, time, entry});
     const result = await query;
     const product = knex(SCHEDULE_TABLE).where('id', result);
     return product;
