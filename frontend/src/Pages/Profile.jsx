@@ -7,8 +7,9 @@ export const Profile = (props) => {
   const [user, setUser] = useState(undefined);
   const [profile, setProfile] = useState(undefined);
   const [products, setProducts] = useState({});
+  const [username, setUsername] = useState("");
 
-  // const params = useParams();
+  const params = useParams();
   const api = new ApiMain();
 
   useEffect(() => {
