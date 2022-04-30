@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { TextField, SelectUserType, User } from "../Common";
+import { User } from "../Common";
 import { ApiMain } from "../Common";
 import { Link, useNavigate } from "react-router-dom";
 import { Form, Button } from "react-bootstrap";
@@ -13,29 +13,30 @@ export const Login = (props) => {
   const navigate = useNavigate();
   const api = new ApiMain();
 
-  const handleSubmit = (event) => {
-    const form = event.currentTarget;
-    if (form.checkValidity() === false) {
-      event.preventDefault();
-      event.stopPropagation();
-      setValidated(true);
-    } else {
-      let newUser = new User(username, password);
-      newUser["user_type"] = user_type;
-      api
-        .signup(newUser)
-        .then((res) => {
-          props.setToken(res.data.data.jwt);
-          localStorage.setItem("token", res.data.data.jwt);
-          navigate("/");
-          console.log(res.data.data.jwt);
-        })
-        .catch((err) => {
-          console.log(err.data.data);
-          alert(err.data.data);
-        });
-    }
-  };
+ const handleSubmit = (e) => {
+   const form = e.currentTarget;
+   e.preventDefault();
+   if (form.checkValidity() === false) {
+     e.stopPropagation();
+     setValidated(true);
+   } else {
+     let newUser = new User(username, password);
+     api
+       .login(newUser)
+       .then((res) => {
+         //  props.setToken(res.data.data.jwt);
+         //  localStorage.setItem("token", res.data.data.jwt);
+         console.log(res);
+         navigate("/");
+         console.log("logged in");
+       })
+       .catch((err) => {
+         console.log(err);
+         alert(err);
+       });
+   }
+ };
+
   if (props.token) {
     return (
       <div class="w-75 mx-auto">
@@ -51,10 +52,23 @@ export const Login = (props) => {
       <h1 class="">Log In</h1>
 
       <Form onSubmit={handleSubmit} noValidate validated={validated}>
-        <Form.Group>
-          <TextField label="Username" value={username} setValue={setUsername} type="text" />
-          <TextField label="Password" value={password} setValue={setPassword} type="password" />
-          <SelectUserType label="Select User Type" value={user_type} setValue={setUserType} />
+        <Form.Group controlId="username">
+          <Form.Label>Username</Form.Label>
+          <Form.Control type="text" placeholder="Enter a Username" value={username} onChange={(e) => setUsername(e.target.value)} required />
+          <Form.Control.Feedback type="invalid"> Please enter a username.</Form.Control.Feedback>
+        </Form.Group>
+        <Form.Group controlId="password">
+          <Form.Label>Password</Form.Label>
+          <Form.Control type="password" placeholder="Enter Your Password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+          <Form.Control.Feedback type="invalid"> Please enter a password.</Form.Control.Feedback>
+        </Form.Group>
+        <Form.Group controlId="user_type">
+          <Form.Label>User Type</Form.Label>
+          <Form.Select aria-label="Default select example" onChange={(e) => setUserType(e.target.value)} required>
+            <option></option>
+            <option value="farmer">Farmer</option>
+            <option value="owner">Restraunt Owner</option>
+          </Form.Select>
         </Form.Group>
         <div className="container p-3">
           <Link to="/" class="btn btn-outline-danger me-3">

@@ -94,8 +94,8 @@ router.put('/:username', async (req, res, next) => {
         if (farmers.length > 0) {
             result = await farmer.updateProfile(req.params.username, body.street_address, body.city, body.state, body.zip, body.phone_num, body.profile_pic);
         }
-        if (rest_owners.length > 0) 
-            result = await rest_owner.updateProfile(req.params.username, body.street_address, body.city, body.state, body.zip, body.phone_num, body.profile_pic);
+        if (rest_owners.length > 0)
+          result = await rest_owner.updateProfile(req.params.username, body.street_address, body.city, body.state, body.zip, body.phone_num);
         res.status(201).json(result);
     } catch (err) {
         console.error('Failed to update profile information:', err);
@@ -105,55 +105,30 @@ router.put('/:username', async (req, res, next) => {
     next();
 });
 
-router.delete('/:username/address', async(req, res, next)=>{ //delete users address
-    try{
-        const user = req.body.user;
-        // const info = req.body;
-        const id = req.user.id;
-        const farmers = await farmer.findUserByUsername(req.params.username);
-        const rest_owners = await rest_owner.findUserByUsername(req.params.username);
-        let result;
-        if (farmers.length > 0) {
-            console.log("Deleting address of farmer with id: ". user.toString());
-            result = await farmer.deleteAddress( user);
-        }
-        if (rest_owners.length > 0) 
-            console.log("Deleting address of rest_owner with id: ". user.toString());
-            result = await rest_owner.deleteAddress( user);
-        res.status(200).json(result);
-    }
-    catch(err){
-        console.error('Failed to delete address for farmer with id: ', user.toString());
-        res.status(400).json({message:err.toString()});
-    }
-    next();
+router.post("/:username/product", async (req, res, next) => {
+  try {
+    const body = req.body;
+    const result = await product.postProduct(body.name, body.price, body.amount);
+    res.status(201).json(result);
+  } catch (err) {
+    console.error("Failed to post product:", err);
+    res.status(500).json({ message: err.toString() });
+  }
 
+  next();
 });
 
-router.post('/:username/product', async (req, res, next) => {
-    try {
-        const body = req.body;
-        const result = await product.postProduct(body.name, body.price, body.amount, req.params.username);
-        res.status(201).json(result);
-    } catch (err) {
-        console.error('Failed to post product:', err);
-        res.status(500).json({ message: err.toString() });
-    }
+router.put("/:username/product", async (req, res, next) => {
+  try {
+    const body = req.body;
+    const result = await product.putProduct(body.id, body.name, body.price, body.amount);
+    res.status(201).json(result);
+  } catch (err) {
+    console.error("Failed to edit product:", err);
+    res.status(500).json({ message: err.toString() });
+  }
 
-    next();  
-});
-
-router.put('/:username/product/:id', async (req, res, next) => {
-    try {
-        const body = req.body;
-        const result = await product.putProduct(req.params.id, body.name, body.price, body.amount);
-        res.status(201).json(result);
-    } catch (err) {
-        console.error('Failed to edit product:', err);
-        res.status(500).json({ message: err.toString() });
-    }
-
-    next();  
+  next();
 });
 
 router.delete('/:username/product/:id', async (req, res, next) => {
@@ -166,7 +141,7 @@ router.delete('/:username/product/:id', async (req, res, next) => {
         res.status(500).json({ message: err.toString() });
     }
 
-    next();  
+    next();
 });
 
 router.post('/:username/schedule', async (req, res, next) => {
@@ -179,7 +154,7 @@ router.post('/:username/schedule', async (req, res, next) => {
         res.status(500).json({ message: err.toString() });
     }
 
-    next();  
+    next();
 });
 
 router.put('/:username/schedule/:id', async (req, res, next) => {
@@ -192,7 +167,7 @@ router.put('/:username/schedule/:id', async (req, res, next) => {
         res.status(500).json({ message: err.toString() });
     }
 
-    next();  
+    next();
 });
 
 router.delete('/:username/schedule/:id', async (req, res, next) => {
@@ -205,7 +180,7 @@ router.delete('/:username/schedule/:id', async (req, res, next) => {
         res.status(500).json({ message: err.toString() });
     }
 
-    next();  
+    next();
 });
 
 module.exports = router;
