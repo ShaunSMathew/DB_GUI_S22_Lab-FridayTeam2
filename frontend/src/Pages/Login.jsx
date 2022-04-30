@@ -13,36 +13,42 @@ export const Login = (props) => {
   const navigate = useNavigate();
   const api = new ApiMain();
 
- const handleSubmit = (e) => {
-   const form = e.currentTarget;
-   e.preventDefault();
-   if (form.checkValidity() === false) {
-     e.stopPropagation();
-     setValidated(true);
-   } else {
-     let newUser = new User(username, password);
-     api
-       .login(newUser)
-       .then((res) => {
+  const handleSubmit = (e) => {
+    const form = e.currentTarget;
+    e.preventDefault();
+    if (form.checkValidity() === false) {
+      e.stopPropagation();
+      setValidated(true);
+    } else {
+      let newUser = new User(username, password);
+      api
+        .login(newUser)
+        .then((res) => {
           props.setToken(res.data);
+          props.setUserName(username);
+          props.setUserType(user_type);
           localStorage.setItem("token", res.data);
-         console.log(res);
-         navigate("/");
-         console.log("logged in");
-       })
-       .catch((err) => {
-         console.log(err);
-         alert(err);
-       });
-   }
- };
+          localStorage.setItem("username", username);
+          localStorage.setItem("user_type", user_type);
+          console.log(res);
+          navigate("/");
+          console.log("logged in");
+        })
+        .catch((err) => {
+          console.log(err);
+          alert(err);
+        });
+    }
+  };
 
   if (props.token) {
     return (
       <div class="w-75 mx-auto">
         <div class="border mb-2 mt-5">
           <h1 class="text-white bg-primary p-3 mb-0">You are already logged in</h1>
-          {navigate("/")}
+          <Link to="/" class="btn btn-outline-danger me-3">
+            Back
+          </Link>
         </div>
       </div>
     );

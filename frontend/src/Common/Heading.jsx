@@ -7,6 +7,7 @@ export const Heading = (props) => {
   const whenLoggingOut = () => {
     console.log("loggingout");
     localStorage.removeItem("token");
+    localStorage.removeItem("username");
     props.setToken(null);
 
     navigate("/");

@@ -18,9 +18,10 @@ router.post('/', async (req, res, next) => {
         const farmers = await farmer.findUserByUsername(body.username);
         const rest_owners = await rest_owner.findUserByUsername(body.username);
         if (farmers.length == 0) {
-            accessToken = jwt.sign({ ...rest_owners[0], claims: ['owner'] }, accessTokenSecret);
-        } else
-            accessToken = jwt.sign({ ...farmers[0], claims: ['farmer'] }, accessTokenSecret);
+          accessToken = jwt.sign({ ...rest_owners[0], claims: ["owner"] }, accessTokenSecret);
+        } else {
+          accessToken = jwt.sign({ ...farmers[0], claims: ["farmer"] }, accessTokenSecret);
+        }
         result = accessToken;
         res.status(201).json(result);
     } catch (err) {
