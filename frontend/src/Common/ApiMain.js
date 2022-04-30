@@ -15,4 +15,7 @@ export class ApiMain {
   getProfile(username) {
     return axios.get(`${this.url}/profile/${username}`);
   }
+  getProducts(username) {
+    return axios.get(`${this.url}/profile/${username}/products`);
+  }
 }

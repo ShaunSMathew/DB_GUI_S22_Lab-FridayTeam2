@@ -24,8 +24,8 @@ export const Login = (props) => {
      api
        .login(newUser)
        .then((res) => {
-         //  props.setToken(res.data.data.jwt);
-         //  localStorage.setItem("token", res.data.data.jwt);
+          props.setToken(res.data);
+          localStorage.setItem("token", res.data);
          console.log(res);
          navigate("/");
          console.log("logged in");

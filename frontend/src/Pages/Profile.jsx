@@ -7,13 +7,12 @@ export const Profile = (props) => {
   const [user, setUser] = useState(undefined);
   const [profile, setProfile] = useState(undefined);
   const [products, setProducts] = useState({});
-  const [username, setUsername] = useState("");
 
-  const params = useParams();
+  const { username } = useParams();
   const api = new ApiMain();
 
   useEffect(() => {
-    api.getProfile(user.username).then((res) => {
+    api.getProfile(username).then((res) => {
       setProfile(res.data);
       console.log(profile);
     });

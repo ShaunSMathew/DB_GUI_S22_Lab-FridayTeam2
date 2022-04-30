@@ -13,40 +13,40 @@ export const Signup = (props) => {
   const navigate = useNavigate();
   const api = new ApiMain();
 
-  const handleSubmit = (event) => {
-    const form = event.currentTarget;
-    if (form.checkValidity() === false) {
-      event.preventDefault();
-      event.stopPropagation();
-      setValidated(true);
-    } else {
-      let newUser = new User(username, password);
-      newUser["user_type"] = user_type;
-      api
-        .signup(newUser)
-        .then((res) => {
-          props.setToken(res.data.data.jwt);
-          localStorage.setItem("token", res.data.data.jwt);
-          navigate("/");
-          console.log(res.data.data.jwt);
-        })
-        .catch((err) => {
-          console.log(err.data.data);
-          alert(err.data.data);
-        });
-    }
-  };
-  if (props.token) {
-    return (
-      <div class="w-75 mx-auto">
-        <div class="border mb-2 mt-5">
-          <h1 class="text-white bg-primary p-3 mb-0">You are already logged in</h1>
-          {navigate("/")}
-        </div>
-      </div>
-    );
-  }
+   const handleSubmit = (e) => {
+     const form = e.currentTarget;
+     e.preventDefault();
+     if (form.checkValidity() === false) {
+       e.stopPropagation();
+       setValidated(true);
+     } else {
+       let newUser = new User(username, password);
+       newUser["user_type"] = user_type;
+       api
+         .signup(newUser)
+         .then((res) => {
+           props.setToken(res.data);
+           localStorage.setItem("token", res.data);
+           navigate("/");
+           console.log(res.data.data.jwt);
+         })
+         .catch((err) => {
+           console.log(err);
+           alert(err);
+         });
+     }
+   };
 
+   if (props.token) {
+     return (
+       <div class="w-75 mx-auto">
+         <div class="border mb-2 mt-5">
+           <h1 class="text-white bg-primary p-3 mb-0">You are already logged in</h1>
+           {navigate("/")}
+         </div>
+       </div>
+     );
+   }
   return (
     <div className="container">
       <h1 class="">Sign Up</h1>

@@ -9,21 +9,23 @@ const router = express.Router();
 router.post('/', async (req, res, next) => {
     try {
         const body = req.body;
+        const accessTokenSecret = "mysupercoolsecret";
+        let accessToken;
         console.log(body);
-        if (!body.username)
-            throw "No username entered";
-        if (body.password.length < 9)
-            throw "Password must be longer than 8 digits"; 
+        if (!body.username) throw "No username entered";
+        if (body.password.length < 9) throw "Password must be longer than 8 digits";
         const users = await user.findUserByUsername(body.username);
-        if (users.length > 0)
-            throw "Username already taken";
-        
+        if (users.length > 0) throw "Username already taken";
+
         await user.createNewUser(body.username, body.password);
-        if(body.user_type == 'farmer')
-            await farmer.createNewFarmer(body.username);
-        else
-            await rest_owner.createNewOwner(body.username);
-        let result = {username: body.username, password: body.password};
+        if (body.user_type == "farmer") {
+          await farmer.createNewFarmer(body.username);
+          accessToken = jwt.sign({ ...farmers[0], claims: ["farmer"] }, accessTokenSecret);
+        } else {
+          await rest_owner.createNewOwner(body.username);
+          accessToken = jwt.sign({ ...rest_owner, claims: ["owner"] }, accessTokenSecret);
+        }
+        let result = accessToken;
         res.status(201).json(result);
     } catch (err) {
         console.error('Failed to create new user:', err);
