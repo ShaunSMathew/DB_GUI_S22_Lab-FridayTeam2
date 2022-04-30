@@ -108,7 +108,7 @@ router.put('/:username', async (req, res, next) => {
 router.post("/:username/product", async (req, res, next) => {
   try {
     const body = req.body;
-    const result = await product.postProduct(body.name, body.price, body.amount);
+    const result = await product.postProduct(body.name, body.price, body.amount, body.description, body.picture, req.params.username);
     res.status(201).json(result);
   } catch (err) {
     console.error("Failed to post product:", err);
@@ -118,10 +118,10 @@ router.post("/:username/product", async (req, res, next) => {
   next();
 });
 
-router.put("/:username/product", async (req, res, next) => {
+router.put("/:username/product/:id", async (req, res, next) => {
   try {
     const body = req.body;
-    const result = await product.putProduct(body.id, body.name, body.price, body.amount);
+    const result = await product.putProduct(req.params.id, body.name, body.price, body.amount, body.description, body.picture);
     res.status(201).json(result);
   } catch (err) {
     console.error("Failed to edit product:", err);
@@ -182,5 +182,25 @@ router.delete('/:username/schedule/:id', async (req, res, next) => {
 
     next();
 });
+
+router.delete('/:username/profilePicture', async (req, res, next) => {
+    try {
+        const body = req.body;
+        const farmers = await farmer.findUserByUsername(req.params.username);
+        const rest_owners = await rest_owner.findUserByUsername(req.params.username);
+        let result;
+        if (farmers.length > 0) {
+            result = await farmer.deletePicture(req.params.username);
+        }
+        if (rest_owners.length > 0)
+          result = await rest_owner.deletePicture(req.params.username);
+        res.status(201).json(result);
+    } catch (err) {
+        console.error('Failed to delete profile picture:', err);
+        res.status(500).json({ message: err.toString() });
+    }
+
+    next();
+})
 
 module.exports = router;
