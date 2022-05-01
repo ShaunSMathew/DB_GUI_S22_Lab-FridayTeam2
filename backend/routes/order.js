@@ -22,6 +22,18 @@ router.post('/', async (req, res, next) => {
     next();
 });
 
+router.put('/tip', async (req, res, next) => {
+    try {
+        const body = req.body;
+        const update = await order.changeTip(body.order_id, body.tip);//update tip
+        res.status(201).json(body);
+    } catch (err) {
+        console.error('Failed to change tip:', err);
+        res.status(500).json({ message: err.toString() });
+    }
+    next();
+});
+
 // router.post('/', async (req, res, next) => {
 //     try {
 //         const user = req.user;
