@@ -5,7 +5,7 @@ import { ApiMain } from "./Common";
 import { Heading } from "./Common/Heading";
 import { BrowserRouter, Route } from "react-router-dom";
 import { Routes } from "react-router";
-import { LandingPage, Login, Signup, Profile, EditProfile, EditProduct } from "./Pages";
+import { LandingPage, Login, Signup, UserProfile, EditProfile, EditProduct,AddProduct } from "./Pages";
 import { User } from "./Common";
 
 // React functional component
@@ -39,17 +39,17 @@ function App() {
   }, [updateToken, token]);
 
   return (
-    <div className="container">
+    <div>
       <BrowserRouter>
         <Heading token={updateToken} setToken={setToken} />
         <Routes>
           <Route exact path="/" element={<LandingPage token={token} username={username} user_type={user_type} />} />
           <Route path="/signup" element={<Signup setToken={setToken} token={token} setUserName={setUserName} setUserType={setUserType} />} />
           <Route path="/login" element={<Login setToken={setToken} token={token} setUserName={setUserName} setUserType={setUserType} />} />
-          <Route path="/profile/:username" element={<Profile token={token} username={username} user_type={user_type} />} />
-          <Route path="/profile/:username/editProfile" element={<EditProfile token={token} username={username} user_type={user_type} />} />
-          <Route path="/profile/:username/:id/editProduct" element={<EditProduct token={token} username={username} user_type={user_type} />} />
-          <Route path="/profile/:username/addProduct" element={<EditProduct token={token} username={username} user_type={user_type} />} />
+          <Route path="/:username/profile" element={<UserProfile token={token} username={username} user_type={user_type} />} />
+          <Route path="/:username/profile/editProfile" element={<EditProfile token={token} username={username} user_type={user_type} />} />
+          <Route path="/:username/:id/editProduct" element={<EditProduct token={token} username={username} user_type={user_type} />} />
+          <Route path="/:username/addProduct" element={<AddProduct token={token} username={username} user_type={user_type} />} />
         </Routes>
       </BrowserRouter>
     </div>

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+
 export const Heading = (props) => {
   const navigate = useNavigate();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -42,7 +43,7 @@ export const Heading = (props) => {
           </Link>
         )}
         {isLoggedIn && (
-          <Link to="/profile/:username" class="btn btn-outline-info ms-2">
+          <Link to={'/${props.username}/profile'} class="btn btn-outline-info ms-2">
             Your Profile
           </Link>
         )}
