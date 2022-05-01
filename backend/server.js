@@ -8,6 +8,7 @@ const sessionRoutes = require("./routes/session");
 const profileRoutes = require("./routes/profile");
 const searchRoutes = require("./routes/search");
 const orderRoutes = require("./routes/order");
+const savedRoutes = require("./routes/saved");
 const reviewFarmerRoutes = require('./routes/review_farmer');
 const reviewProductRoutes = require('./routes/review_product');
 
@@ -36,6 +37,7 @@ app.use("/newaccount", accountRoutes);
 app.use("/login", sessionRoutes);
 app.use("/search", searchRoutes);
 app.use("/order", authenticateWithClaims(['owner']), orderRoutes);
+app.use("/saved", authenticateWithClaims(['owner']), savedRoutes);
 app.use("/profile", authenticateJWT, profileRoutes);
 app.use('/reviewFarmer', authenticateWithClaims(['owner']), reviewFarmerRoutes);
 app.use('/reviewProduct', authenticateWithClaims(['owner']), reviewProductRoutes);
