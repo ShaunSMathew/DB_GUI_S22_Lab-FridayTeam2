@@ -26,7 +26,7 @@ router.put('/tip', async (req, res, next) => {
     try {
         const body = req.body;
         const update = await order.changeTip(body.order_id, body.tip);//update tip
-        res.status(201).json(body);
+        res.status(201).json(body.tip);
     } catch (err) {
         console.error('Failed to change tip:', err);
         res.status(500).json({ message: err.toString() });
