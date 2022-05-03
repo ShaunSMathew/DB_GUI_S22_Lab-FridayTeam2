@@ -42,7 +42,7 @@ export const LandingPage = (props) => {
       <div className="container">
         <h3>Welcome {props.username}</h3>
         <p>Here you can add or edit the products that restraunt owners will be able to see:</p>
-        <Card>
+        {/* <Card>
           <Card.Header>
             <Row>
               <Col sm={9}>
@@ -69,7 +69,7 @@ export const LandingPage = (props) => {
               })}
             </ListGroup>
           </Card.Body>
-        </Card>
+        </Card> */}
       </div>
     );
   } else {
