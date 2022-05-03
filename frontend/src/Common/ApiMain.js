@@ -17,4 +17,12 @@ export class ApiMain {
   getProducts(username) {
     return axios.get(`${this.url}/profile/${username}/products`);
   }
+
+  addProduct(username, product) {
+    return axios.post(`${this.url}/profile/${username}/product`, product);
+  }
+
+  search() {
+
+  }
 }

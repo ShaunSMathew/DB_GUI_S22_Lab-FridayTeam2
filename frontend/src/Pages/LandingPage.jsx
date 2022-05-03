@@ -6,12 +6,30 @@ import { ListGroup, Card, Row, Col } from "react-bootstrap";
 export const LandingPage = (props) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [products, setProducts] = useState([]);
+  const [username, setUsername] = useState("");
+  const [user_type, setUserType] = useState("");
 
   const api = new ApiMain();
 
   useEffect(() => {
     setIsLoggedIn(props.token);
-  }, [props.token]);
+    setUserType(props.user_type);
+    setUsername(props.username);
+    if (user_type === "farmer") {
+      api.getProducts(username).then((res) => {
+        const prods = res.data;
+        setProducts(prods);
+        console.log(prods);
+      });
+    }
+    if (user_type === "owner") {
+      api.getProducts(username).then((res) => {
+        const prods = res.data;
+        setProducts(prods);
+        console.log(prods);
+      });
+    }
+  }, [isLoggedIn]);
 
   if (!isLoggedIn) {
     return (
@@ -32,15 +50,10 @@ export const LandingPage = (props) => {
         </div>
       </div>
     );
-  } else if (isLoggedIn && props.user_type == "farmer") {
-    api.getProducts(props.username).then((res) => {
-      const prods = res.data;
-      setProducts(prods);
-      console.log(prods);
-    });
+  } else if (isLoggedIn && user_type == "farmer") {
     return (
       <div className="container">
-        <h3>Welcome {props.username}</h3>
+        <h3>Welcome {username}</h3>
         <p>Here you can add or edit the products that restraunt owners will be able to see:</p>
         {/* <Card>
           <Card.Header>
@@ -49,7 +62,7 @@ export const LandingPage = (props) => {
                 <h4>Products</h4>
               </Col>
               <Col>
-                <Link to={'/profile/${username}/addProduct'} className="btn">
+                <Link to={`/${username}/addProduct`} className="btn">
                   Add Product
                 </Link>
               </Col>
@@ -57,11 +70,10 @@ export const LandingPage = (props) => {
           </Card.Header>
           <Card.Body>
             <ListGroup variant="flush">
-              {products.map((products) => {
+              {products.map((product) => {
                 return (
                   <ListGroup.Item>
-                    Cras justo odio
-                    <Link to="/profile/:username/:id/editProduct" className="btn float-end">
+                    <Link to={`/${username}/${product.id}/editProduct`} className="btn float-end">
                       Edit Product
                     </Link>
                   </ListGroup.Item>
@@ -75,8 +87,35 @@ export const LandingPage = (props) => {
   } else {
     return (
       <div className="container">
-        <h3>Welcome {props.username}</h3>
-        <h5>Restraunt Owner</h5>
+        <h3>Welcome {username}</h3>
+        <p>Here you can search:</p>
+        <Card title="Search">
+          <TextField label="Name" value={name} setValue={setName} />
+        </Card>
+        <Card title="Results">
+          <table className="table table-condensed table-striped">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Employee</th>
+                <th>&nbsp;</th>
+              </tr>
+            </thead>
+            <tbody>
+              {products.map((product) => (
+                <tr key={account.id}>
+
+                  <td>{account.email}</td>
+                  <td>{account.isEmployee ? "Yes" : "No"}</td>
+                  <td>
+                    
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </Card>
       </div>
     );
   }

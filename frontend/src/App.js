@@ -48,7 +48,7 @@ function App() {
           <Route path="/login" element={<Login setToken={setToken} token={token} setUserName={setUserName} setUserType={setUserType} />} />
           <Route path="/:username/profile" element={<UserProfile token={token} username={username} user_type={user_type} />} />
           <Route path="/:username/profile/editProfile" element={<EditProfile token={token} username={username} user_type={user_type} />} />
-          <Route path="/:username/:id/editProduct" element={<EditProduct token={token} username={username} user_type={user_type} />} />
+          <Route path="/:username/:productId/editProduct" element={<EditProduct token={token} username={username} user_type={user_type} />} />
           <Route path="/:username/addProduct" element={<AddProduct token={token} username={username} user_type={user_type} />} />
         </Routes>
       </BrowserRouter>

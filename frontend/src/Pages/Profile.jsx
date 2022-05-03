@@ -7,6 +7,8 @@ export const UserProfile = (props) => {
   const [user, setUser] = useState(undefined);
   const [profile, setProfile] = useState(undefined);
   const [products, setProducts] = useState([]);
+  const [username, setUsername] = useState("");
+  const [address, setAddress] = useState("");
 
   const params = useParams();
   const api = new ApiMain();
@@ -15,6 +17,7 @@ export const UserProfile = (props) => {
     api.getProfile(params.username).then((res) => {
       setProfile(res.data);
       console.log(profile);
+      setUsername(params.username);
     });
   }, []);
   return (
@@ -22,18 +25,21 @@ export const UserProfile = (props) => {
       <Card>
         <Card.Header>
           Your Profile
-          <Link to="/:username/profile/editProfile" className="btn float-end">
+          <Link to={`/${username}/profile/editProfile`} className="btn float-end">
             Edit Profile
           </Link>
         </Card.Header>
         <Card.Body>
-          <Card.Title>{params.username}</Card.Title>
+          <Card.Title>{username}</Card.Title>
           <Card.Text>
             <h5>Address:</h5>
-            <p>34456 fsfef ffdf</p>
+            <p>344</p>
           </Card.Text>
         </Card.Body>
       </Card>
+      <Link to="/" className="btn btn-danger m-1">
+        Back
+      </Link>
     </div>
   );
 };

@@ -107,9 +107,10 @@ router.put('/:username', async (req, res, next) => {
 
 router.post("/:username/product", async (req, res, next) => {
   try {
-    const body = req.body;
-    const result = await product.postProduct(body.name, body.price, body.amount);
-    res.status(201).json(result);
+      const body = req.body;
+      const username = req.params.username;
+      const result = await product.postProduct(body.name, body.price, body.amount, username);
+      res.status(201).json(result);
   } catch (err) {
     console.error("Failed to post product:", err);
     res.status(500).json({ message: err.toString() });

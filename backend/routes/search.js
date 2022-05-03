@@ -16,7 +16,7 @@ const router = express.Router();
 //     next();
 // });
 
-router.get('/products', async (req, res, next)=>{ //Allows users to search products by product id, name, amount and price 
+router.get('/products', async (req, res, next)=>{ //Allows users to search products by product id, name, amount and price
     try{
         const id = req.query.id;
         const name = req.query.name;
@@ -27,7 +27,7 @@ router.get('/products', async (req, res, next)=>{ //Allows users to search produ
             message: 'Products retrieved',
             results: results
         });
-   
+
     } catch (error){
         res.status(500).json({
             message:'Something went wrong with the search query. Please make sure that all query fields are valid and work with the database.'
