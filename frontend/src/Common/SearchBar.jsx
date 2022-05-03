@@ -33,15 +33,15 @@ export const SearchBar = (props) => {
     <div class="w-75 mx-auto">
       <Form id="search-products">
         <Row>
-          <Form.Group className="mb-2 col-md-6" controlId="product">
+          {/* <Form.Group className="mb-2 col-md-6" controlId="product">
             <Form.Control type="text" placeholder="Enter Product Name" value={product} onChange={(e) => setProduct(e.target.value)} />
-          </Form.Group>
-          {/* <Form.Group className="mb-2 col-md-6" controlId="farmerName">
-            <Form.Control type="text" placeholder="Enter Farmer Name" value={farmerName} onChange={(e) => setFarmerName(e.target.value)} />
           </Form.Group> */}
+          <Form.Group className="mb-2 " controlId="farmerName">
+            <Form.Control type="text" placeholder="Enter Farmer Name" value={farmerName} onChange={(e) => setFarmerName(e.target.value)} />
+          </Form.Group>
         </Row>
       </Form>
-      <button class="btn btn-success col-md-12" onClick={() => props.onSearch({ product })} form="search-form">
+      <button class="btn btn-success col-md-12" onClick={() => props.onSearch({ farmerName })} form="search-form">
         Search
       </button>
     </div>

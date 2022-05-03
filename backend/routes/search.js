@@ -24,21 +24,6 @@ router.get("/products", async (req, res, next) => {
   }
   next();
 });
-router.get("/products", async (req, res, next) => {
-  //Allows users to search products by product id, name, amount and price
-  try {
-    const results = await products.getAllProducts();
-    res.status(200).json({
-      message: "Products retrieved",
-      results: results,
-    });
-  } catch (error) {
-    res.status(500).json({
-      message: "Something went wrong with the search query. Please make sure that all query fields are valid and work with the database.",
-    });
-  }
-  next();
-});
 
 router.get("/productByFarmer", async (req, res, next) => {
   //Accepts a farmer's username to return all products posted by that farmer

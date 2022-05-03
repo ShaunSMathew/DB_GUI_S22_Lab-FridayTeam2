@@ -26,30 +26,25 @@ export const LandingPage = (props) => {
       });
     }
     if (user_type === "owner") {
-api.getAllProducts().then((res) => {
-  const prods = res.data;
-  setProducts(prods);
-});
     }
   });
 
-  // const onSearch = (searchParams) => {
-
-  //   if (searchParams.product) {
-  //     setSearchProductName(searchParams.product);
-  //     api.searchByProduct(searchProductName).then((res) => {
-  //       const searchProds = res.data;
-  //       setProducts(searchProds);
-  //     });
-  //   }
-  //   if (searchParams.farmerName) {
-  //     setSearchProductName(searchParams.farmerName);
-  //     api.searchByUsername(searchUsername).then((res) => {
-  //       const searchProds = res.data;
-  //       setProducts(searchProds);
-  //     });
-  //   }
-  // };
+  const onSearch = (searchParams) => {
+    // if (searchParams.product) {
+    //   setSearchProductName(searchParams.product);
+    //   api.searchByProduct(searchProductName).then((res) => {
+    //     const searchProds = res.data;
+    //     setProducts(searchProds);
+    //   });
+    // }
+    if (searchParams.farmerName) {
+      setSearchUsername(searchParams.farmerName);
+      api.getProducts(searchUsername).then((res) => {
+        const searchProds = res.data;
+        setProducts(searchProds);
+      });
+    }
+  };
 
   if (!isLoggedIn) {
     return (
@@ -119,9 +114,9 @@ api.getAllProducts().then((res) => {
       <div className="container">
         <h3>Welcome {username}</h3>
         <p>Here you can look for products:</p>
-        {/* <Card title="Search">
+        <Card title="Search">
           <SearchBar onSearch={(searP) => onSearch(searP)} />
-        </Card> */}
+        </Card>
         <Card title="Results">
           <table className="table table-condensed table-striped">
             <thead>

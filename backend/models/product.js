@@ -125,13 +125,6 @@ const updateProductReview = async (id, like_or_dislike) => {
   return result;
 };
 
-const getAllProducts = async () => {
-  //This returns all products
-  const query = knex(PRODUCT_TABLE);
-  const result = await query;
-  return result;
-};
-
 module.exports = {
   getProductByFarmer,
   postProduct,
@@ -144,5 +137,4 @@ module.exports = {
   findProductByID,
   updateAmount,
   updateProductReview,
-  getAllProducts,
 };

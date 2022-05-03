@@ -8,9 +8,7 @@ export const EditProduct = (props) => {
   const [account, setAccount] = useState(undefined);
   const [product, setProduct] = useState(undefined);
 
-  const { username } = useParams();
-  const { id } = useParams();
-
+  const params = useParams();
 
   return <p>edit</p>;
 };

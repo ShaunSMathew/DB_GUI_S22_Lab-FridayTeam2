@@ -27,10 +27,8 @@ export class ApiMain {
   }
 
   searchByProduct(productName) {
-    axios.get(`${this.url}/products`, { name: productName });
+    axios.get(`${this.url}/products`, productName );
   }
 
-  getAllProducts() {
-    axios.get(`${this.url}/products`);
-  }
+
 }
