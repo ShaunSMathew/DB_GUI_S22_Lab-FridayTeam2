@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ApiMain } from "../Common";
-import { ListGroup, Card, Row, Col } from "react-bootstrap";
+import { ListGroup, Card, Row, Col, Form } from "react-bootstrap";
+import { SearchBar } from "../Common/SearchBar";
 
 export const LandingPage = (props) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [products, setProducts] = useState([]);
   const [username, setUsername] = useState("");
   const [user_type, setUserType] = useState("");
+  const [searchUsername, setSearchUsername] = useState("");
+  const [searchProductName, setSearchProductName] = useState("");
+
 
   const api = new ApiMain();
 
@@ -19,17 +23,33 @@ export const LandingPage = (props) => {
       api.getProducts(username).then((res) => {
         const prods = res.data;
         setProducts(prods);
-        console.log(prods);
       });
     }
     if (user_type === "owner") {
-      api.getProducts(username).then((res) => {
-        const prods = res.data;
-        setProducts(prods);
-        console.log(prods);
-      });
+api.getAllProducts().then((res) => {
+  const prods = res.data;
+  setProducts(prods);
+});
     }
-  }, [isLoggedIn]);
+  });
+
+  // const onSearch = (searchParams) => {
+
+  //   if (searchParams.product) {
+  //     setSearchProductName(searchParams.product);
+  //     api.searchByProduct(searchProductName).then((res) => {
+  //       const searchProds = res.data;
+  //       setProducts(searchProds);
+  //     });
+  //   }
+  //   if (searchParams.farmerName) {
+  //     setSearchProductName(searchParams.farmerName);
+  //     api.searchByUsername(searchUsername).then((res) => {
+  //       const searchProds = res.data;
+  //       setProducts(searchProds);
+  //     });
+  //   }
+  // };
 
   if (!isLoggedIn) {
     return (
@@ -54,7 +74,7 @@ export const LandingPage = (props) => {
     return (
       <div className="container">
         <h3>Welcome {username}</h3>
-        <p>Here you can add or edit the products that restraunt owners will be able to see:</p>
+        <p>Here you can add the products that restraunt owners will be able to see:</p>
         <Card>
           <Card.Header>
             <Row>
@@ -69,17 +89,27 @@ export const LandingPage = (props) => {
             </Row>
           </Card.Header>
           <Card.Body>
-            <ListGroup variant="flush">
-              {products.map((product) => {
-                return (
-                  <ListGroup.Item>
-                    <Link to={`/${username}/${product.id}/editProduct`} className="btn float-end">
-                      Edit Product
-                    </Link>
-                  </ListGroup.Item>
-                );
-              })}
-            </ListGroup>
+            <table className="table table-condensed table-striped">
+              <thead>
+                <tr>
+                  <th>Product Name</th>
+                  <th>Price</th>
+                  <th>Amount</th>
+                  <th>&nbsp;</th>
+                </tr>
+              </thead>
+              <tbody>
+                {products.map((product) => {
+                  return (
+                    <tr key={product.id}>
+                      <td>{product.name}</td>
+                      <td>{product.price}</td>
+                      <td>{product.amount}</td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
           </Card.Body>
         </Card>
       </div>
@@ -88,34 +118,35 @@ export const LandingPage = (props) => {
     return (
       <div className="container">
         <h3>Welcome {username}</h3>
-        <p>Here you can search:</p>
+        <p>Here you can look for products:</p>
         {/* <Card title="Search">
-          <TextField label="Name" value={name} setValue={setName} />
-        </Card>
+          <SearchBar onSearch={(searP) => onSearch(searP)} />
+        </Card> */}
         <Card title="Results">
           <table className="table table-condensed table-striped">
             <thead>
               <tr>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Employee</th>
+                <th>Farmer</th>
+                <th>Product Name</th>
+                <th>Price</th>
+                <th>Amount</th>
                 <th>&nbsp;</th>
               </tr>
             </thead>
             <tbody>
-              {products.map((product) => (
-                <tr key={account.id}>
-
-                  <td>{account.email}</td>
-                  <td>{account.isEmployee ? "Yes" : "No"}</td>
-                  <td>
-
-                  </td>
-                </tr>
-              ))}
+              {products.map((product) => {
+                return (
+                  <tr key={product.id}>
+                    <td>{product.farmer_username}</td>
+                    <td>{product.name}</td>
+                    <td>{product.price}</td>
+                    <td>{product.amount}</td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
-        </Card> */}
+        </Card>
       </div>
     );
   }

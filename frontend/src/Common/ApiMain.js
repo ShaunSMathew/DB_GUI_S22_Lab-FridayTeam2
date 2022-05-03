@@ -22,7 +22,15 @@ export class ApiMain {
     return axios.post(`${this.url}/profile/${username}/product`, product);
   }
 
-  search() {
+  searchByUsername(farmer_username) {
+    return axios.get(`${this.url}/productByFarmer`, farmer_username);
+  }
 
+  searchByProduct(productName) {
+    axios.get(`${this.url}/products`, { name: productName });
+  }
+
+  getAllProducts() {
+    axios.get(`${this.url}/products`);
   }
 }
