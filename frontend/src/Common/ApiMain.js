@@ -22,13 +22,17 @@ export class ApiMain {
     return axios.post(`${this.url}/profile/${username}/product`, product);
   }
 
-  searchByUsername(farmer_username) {
-    return axios.get(`${this.url}/productByFarmer`, farmer_username);
+  editProduct(username,id, product) {
+    return axios.put(`${this.url}/profile/${username}/product/${id}`, product);
   }
 
-  searchByProduct(productName) {
-    axios.get(`${this.url}/products`, productName );
-  }
+  // searchByUsername(farmer_username) {
+  //   return axios.get(`${this.url}/productByFarmer`, farmer_username);
+  // }
+
+  // searchByProduct(productName) {
+  //   axios.get(`${this.url}/products`, productName );
+  // }
 
 
 }
