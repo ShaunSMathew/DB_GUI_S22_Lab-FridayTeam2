@@ -47,7 +47,7 @@ const changePicture = async (body, restUser) => {
 };
 
 const deletePicture = async(restUser) =>{
-    const deletePic = knex(REST_OWNER_TABLE).where({username:restUser}).update({picture: " "}); 
+    const deletePic = knex(REST_OWNER_TABLE).where({username:restUser}).update({profile_pic: " "}); 
     const result = await deletePic;
     return result;
 };

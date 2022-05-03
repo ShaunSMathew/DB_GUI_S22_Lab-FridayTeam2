@@ -4,17 +4,6 @@ const rest_owner = require('../models/rest_owner');
 const products = require('../models/product');
 const router = express.Router();
 
-// router.get('/', async (req, res, next) => {
-//     try {
-//         const user = req.user;
-//         const farmer = await farmer.findUserByUsername(user.username);
-//         res.status(201).json(farmer);
-//     } catch (err) {
-//         console.error('Failed to get farmer:', err);
-//         res.status(500).json({ message: err.toString() });
-//     }
-//     next();
-// });
 
 router.get('/products', async (req, res, next)=>{ //Allows users to search products by product id, name, amount and price
     try{
@@ -54,7 +43,7 @@ router.get('/productByFarmer', async(req, res, next)=>{ //Accepts a farmer's use
     next();
 });
 
-router.get('/productByTag', async(req, res, next)=>{
+router.get('/productByTag', async(req, res, next)=>{ //Accepts a hashtag and returns all products associated with that hashtag
     try{
         const hashtag = req.query.hashtag;
         const results = await products.getProductByTag(hashtag);
@@ -71,7 +60,7 @@ router.get('/productByTag', async(req, res, next)=>{
     next();
 });
 
-router.get('/farmersByLocation', async(req, res, next)=>{ //
+router.get('/farmersByLocation', async(req, res, next)=>{ //Accepts a street_address, city, state, and zip and returns all farmers with the included information. Can be a full set of parameters or at least one
     try{
         const street = req.query.street_address;
         const city = req.query.city;

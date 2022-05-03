@@ -106,3 +106,7 @@ CREATE TABLE `db`.`schedule` (
 
 INSERT INTO `db`.`schedule` (`date`, `time`, `entry`, `farmer_username`)
 VALUES ('2022-02-01', '12:00', 'Potato delivery', 'testUser1');
+
+ALTER TABLE `product`
+ADD `description` VARCHAR(200),
+ADD `picture` VARCHAR(500);
