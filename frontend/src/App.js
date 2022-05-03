@@ -5,7 +5,7 @@ import { ApiMain } from "./Common";
 import { Heading } from "./Common/Heading";
 import { BrowserRouter, Route } from "react-router-dom";
 import { Routes } from "react-router";
-import { LandingPage, Login, Signup, Profile, EditProfile, EditProduct } from "./Pages";
+import { LandingPage, Login, Signup, UserProfile, EditProfile, EditProduct,AddProduct } from "./Pages";
 import { User } from "./Common";
 
 // React functional component
@@ -13,8 +13,7 @@ function App() {
   // state for storage of the information on the webpage of forms and list, uses hooks
   const [token, setToken] = useState();
   const [username, setUserName] = useState();
-  const [userType, setUserType] = useState();
-  const [userId, setUserId] = useState();
+  const [user_type, setUserType] = useState();
   const [updateToken, setUpdateToken] = useState();
 
   // ENTER YOUR EC2 PUBLIC IP/URL HERE
@@ -28,40 +27,29 @@ function App() {
 
   useEffect(() => {
     const tokenn = localStorage.getItem("token");
-    api
-      .checkUser(tokenn)
-      .then((res) => {
-        console.log("token checked");
-        setToken(tokenn);
-        if (res.status === 200) {
-          setUserName(res.data.username);
-          setUserType(res.data.user_type);
-        } else {
-          setUserName(null);
-          setUserType(null);
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      })
-      .finally(() => {
-        setUpdateToken(token);
-        console.log(username, userId, userType);
-      });
+    const uname = localStorage.getItem("username");
+    const type = localStorage.getItem("user_type");
+    setToken(tokenn);
+    if (token) {
+      setUserName(uname);
+      setUserType(type);
+      setUpdateToken(token);
+      console.log(token, uname, type);
+    }
   }, [updateToken, token]);
 
   return (
-    <div className="container">
+    <div>
       <BrowserRouter>
         <Heading token={updateToken} setToken={setToken} />
         <Routes>
-          <Route exact path="/" element={<LandingPage token={token} username={username} userType={userType} />} />
-          <Route path="/signup" element={<Signup setToken={setToken} token={token} />} />
-          <Route path="/login" element={<Login setToken={setToken} token={token} />} />
-          <Route path="/profile/:username" element={<Profile token={token} username={username} userType={userType} />} />
-          <Route path="/profile/:username/editProfile" element={<EditProfile token={token} username={username} userType={userType} />} />
-          <Route path="/profile/:username/:id/editProduct" element={<EditProduct token={token} username={username} userType={userType} />} />
-          <Route path="/profile/:username/addProduct" element={<EditProduct token={token} username={username} userType={userType} />} />
+          <Route exact path="/" element={<LandingPage token={token} username={username} user_type={user_type} />} />
+          <Route path="/signup" element={<Signup setToken={setToken} token={token} setUserName={setUserName} setUserType={setUserType} />} />
+          <Route path="/login" element={<Login setToken={setToken} token={token} setUserName={setUserName} setUserType={setUserType} />} />
+          <Route path="/:username/profile" element={<UserProfile token={token} username={username} user_type={user_type} />} />
+          <Route path="/:username/profile/editProfile" element={<EditProfile token={token} username={username} user_type={user_type} />} />
+          <Route path="/:username/:productId/editProduct" element={<EditProduct token={token} username={username} user_type={user_type} />} />
+          <Route path="/:username/addProduct" element={<AddProduct token={token} username={username} user_type={user_type} />} />
         </Routes>
       </BrowserRouter>
     </div>

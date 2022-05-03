@@ -26,9 +26,14 @@ export const Signup = (props) => {
          .signup(newUser)
          .then((res) => {
            props.setToken(res.data);
+           props.setUserName(username);
+           props.setUserType(user_type);
            localStorage.setItem("token", res.data);
+           localStorage.setItem("username", username);
+           localStorage.setItem("user_type", user_type);
+           console.log(res);
            navigate("/");
-           console.log(res.data.data.jwt);
+           console.log("signed up");
          })
          .catch((err) => {
            console.log(err);
@@ -42,7 +47,9 @@ export const Signup = (props) => {
        <div class="w-75 mx-auto">
          <div class="border mb-2 mt-5">
            <h1 class="text-white bg-primary p-3 mb-0">You are already logged in</h1>
-           {navigate("/")}
+           <Link to="/" class="btn btn-outline-danger me-3">
+             Back
+           </Link>
          </div>
        </div>
      );

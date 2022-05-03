@@ -37,8 +37,8 @@ app.use("/newaccount", accountRoutes);
 app.use("/login", sessionRoutes);
 app.use("/search", searchRoutes);
 app.use("/order", authenticateWithClaims(['owner']), orderRoutes);
+app.use("/profile", profileRoutes); // authenticateJWT,
 app.use("/saved", authenticateWithClaims(['owner']), savedRoutes);
-app.use("/profile", authenticateJWT, profileRoutes);
 app.use('/reviewFarmer', authenticateWithClaims(['owner']), reviewFarmerRoutes);
 app.use('/reviewProduct', authenticateWithClaims(['owner']), reviewProductRoutes);
 
