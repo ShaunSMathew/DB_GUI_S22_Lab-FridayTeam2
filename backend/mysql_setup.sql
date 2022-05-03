@@ -21,6 +21,7 @@ CREATE TABLE `db`.`farmer` (
     `ratings_sum` FLOAT,
     `num_of_ratings` INTEGER,
     `phone_num` VARCHAR(15),
+    `picture` varchar(500) DEFAULT NULL,
     -- `profile_pic` VARCHAR(500),
     PRIMARY KEY (`username`),
     FOREIGN KEY (username) REFERENCES `db`.`user`(username),
@@ -41,6 +42,8 @@ CREATE TABLE `db`.`product` (
     `likes` INT,
     `dislikes` INT,
     `farmer_username` VARCHAR(45),
+    `description` varchar(200) DEFAULT NULL,
+    `picture` varchar(500) DEFAULT NULL,
     PRIMARY KEY (`id`),
     FOREIGN KEY (farmer_username) REFERENCES farmer(username),
     UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE
@@ -63,6 +66,7 @@ CREATE TABLE `db`.`rest_owner` (
     `ratings_sum` FLOAT,
     `num_of_ratings` INTEGER,
     `phone_num` VARCHAR(15),
+    `picture` varchar(500) DEFAULT NULL,
     -- `profile_pic` VARCHAR(500),
     PRIMARY KEY (`username`),
     FOREIGN KEY (username) REFERENCES `db`.`user`(username),
@@ -74,8 +78,9 @@ CREATE TABLE `db`.`order` (
     `id` INT NOT NULL AUTO_INCREMENT,
     `farmer_username` VARCHAR(45) NOT NULL,
     `rest_owner_username` VARCHAR(45) NOT NULL,
-    `product_id` INTEGER,
-    `tip` FLOAT,
+    `product_id` int DEFAULT NULL,
+    `tip` float DEFAULT NULL,
+    `amount` int DEFAULT NULL,
     PRIMARY KEY (`id`),
     UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
     INDEX (rest_owner_username),
@@ -89,8 +94,9 @@ CREATE TABLE `db`.`saved` (
     `id` INT NOT NULL AUTO_INCREMENT,
     `farmer_username` VARCHAR(45) NOT NULL,
     `rest_owner_username` VARCHAR(45) NOT NULL,
-    `product_id` INTEGER,
-    `tip` FLOAT,
+    `product_id` int DEFAULT NULL,
+    `tip` float DEFAULT NULL,
+    `amount` int DEFAULT NULL,
     PRIMARY KEY (`id`),
     UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
     INDEX (rest_owner_username),
@@ -121,7 +127,3 @@ CREATE TABLE `db`.`schedule` (
 
 INSERT INTO `db`.`schedule` (`date`, `time`, `entry`, `farmer_username`)
 VALUES ('2022-02-01', '12:00', 'Potato delivery', 'testUser1');
-
-ALTER TABLE `product`
-ADD `description` VARCHAR(200),
-ADD `picture` VARCHAR(500);
