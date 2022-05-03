@@ -85,6 +85,21 @@ CREATE TABLE `db`.`order` (
     FOREIGN KEY(product_id) REFERENCES product(id)
 );
 
+CREATE TABLE `db`.`saved` (
+    `id` INT NOT NULL AUTO_INCREMENT,
+    `farmer_username` VARCHAR(45) NOT NULL,
+    `rest_owner_username` VARCHAR(45) NOT NULL,
+    `product_id` INTEGER,
+    `tip` FLOAT,
+    PRIMARY KEY (`id`),
+    UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
+    INDEX (rest_owner_username),
+    INDEX (`farmer_username`),
+    FOREIGN KEY(rest_owner_username) REFERENCES rest_owner(username),
+    FOREIGN KEY(farmer_username) REFERENCES farmer(username),
+    FOREIGN KEY(product_id) REFERENCES product(id)
+);
+
 CREATE TABLE `db`.`review` (
     `id` INT NOT NULL AUTO_INCREMENT,
     `text` VARCHAR(500),
