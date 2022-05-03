@@ -63,7 +63,7 @@ export const AddProduct = (props) => {
         <Form.Group controlId="amount">
           <Form.Label>Amount of Product</Form.Label>
           <Form.Control type="text" value={amount} onChange={(e) => setAmount(e.target.value)} required />
-          <Form.Control.Feedback type="invalid"> Please enter anamount.</Form.Control.Feedback>
+          <Form.Control.Feedback type="invalid"> Please enter an amount.</Form.Control.Feedback>
         </Form.Group>
         <div className="container p-3">
           <Link to="/" class="btn btn-outline-danger me-3">

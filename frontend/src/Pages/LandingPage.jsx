@@ -55,7 +55,7 @@ export const LandingPage = (props) => {
       <div className="container">
         <h3>Welcome {username}</h3>
         <p>Here you can add or edit the products that restraunt owners will be able to see:</p>
-        {/* <Card>
+        <Card>
           <Card.Header>
             <Row>
               <Col sm={9}>
@@ -81,7 +81,7 @@ export const LandingPage = (props) => {
               })}
             </ListGroup>
           </Card.Body>
-        </Card> */}
+        </Card>
       </div>
     );
   } else {
@@ -89,7 +89,7 @@ export const LandingPage = (props) => {
       <div className="container">
         <h3>Welcome {username}</h3>
         <p>Here you can search:</p>
-        <Card title="Search">
+        {/* <Card title="Search">
           <TextField label="Name" value={name} setValue={setName} />
         </Card>
         <Card title="Results">
@@ -109,13 +109,13 @@ export const LandingPage = (props) => {
                   <td>{account.email}</td>
                   <td>{account.isEmployee ? "Yes" : "No"}</td>
                   <td>
-                    
+
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
-        </Card>
+        </Card> */}
       </div>
     );
   }
