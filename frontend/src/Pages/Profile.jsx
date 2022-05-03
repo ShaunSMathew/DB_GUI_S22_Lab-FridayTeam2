@@ -32,8 +32,8 @@ export const UserProfile = (props) => {
         <Card.Body>
           <Card.Title>{username}</Card.Title>
           <Card.Text>
-            <h5>Address:</h5>
-            <p>344</p>
+            <h5>Username:</h5>
+            <p>{params.username}</p>
           </Card.Text>
         </Card.Body>
       </Card>

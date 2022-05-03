@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ApiMain } from "../Common";
-import { ListGroup, Card, Row, Col, Form } from "react-bootstrap";
+import { Card, Row, Col, Form } from "react-bootstrap";
 import { SearchBar } from "../Common/SearchBar";
 
 export const LandingPage = (props) => {
@@ -11,7 +11,6 @@ export const LandingPage = (props) => {
   const [user_type, setUserType] = useState("");
   const [searchUsername, setSearchUsername] = useState("");
   const [searchProductName, setSearchProductName] = useState("");
-
 
   const api = new ApiMain();
 
@@ -100,6 +99,9 @@ export const LandingPage = (props) => {
                       <td>{product.name}</td>
                       <td>{product.price}</td>
                       <td>{product.amount}</td>
+                      {/* <td>
+                        <Link to={`/${username}/${product.id}/editProduct`}>Edit Product</Link>
+                      </td> */}
                     </tr>
                   );
                 })}

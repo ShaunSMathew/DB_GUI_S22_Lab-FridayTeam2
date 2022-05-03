@@ -27,7 +27,7 @@ export const AddProduct = (props) => {
       e.stopPropagation();
       setValidated(true);
     } else {
-      let newProduct = new Product(productName, price, amount);
+      let newProduct = new Product(productName, price, amount, " ", " ");
       console.log(newProduct);
       api
         .addProduct(username, newProduct)
